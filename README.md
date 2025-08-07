@@ -228,7 +228,7 @@ The AI chat uses keyword detection to provide relevant responses:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+We welcome contributions!
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -261,4 +261,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ for HIT students**
 
-© 2024 Team MentorHIT. All rights reserved.
+© 2025 Team MentorHIT. All rights reserved.
