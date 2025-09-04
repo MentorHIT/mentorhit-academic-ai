@@ -33,7 +33,7 @@ try:
     with open('$transcript_path', 'r') as f:
         lines = f.readlines()
     
-    most_recent_usage = None
+    most_recent_usage = NoneHo
     most_recent_timestamp = None
     
     for line in lines:

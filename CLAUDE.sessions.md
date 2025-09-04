@@ -142,7 +142,3 @@ These protocols guide specific workflows:
 - You: "Would you like me to run the task completion protocol?"
 - User: "Yes"
 - You: [NOW read task-completion.md] → "I'll complete the task now..."
-
-## Sessions System Behaviors
-
-@CLAUDE.sessions.md
