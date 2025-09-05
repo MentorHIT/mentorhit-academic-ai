@@ -134,7 +134,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     /* Prevent zooming on iOS when focusing inputs */
     -webkit-text-size-adjust: 100%;
   }
@@ -148,7 +148,6 @@
 
   /* Mobile viewport adjustments */
   @media screen and (max-width: 768px) {
-
     html,
     body {
       overflow-x: hidden;
@@ -159,11 +158,9 @@
 
 /* HIT-specific component styles */
 @layer components {
-
   /* Primary button with HIT colors - Mobile optimized */
   .btn-hit-primary {
     @apply bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2;
-    /* Mobile: Larger touch targets */
     min-height: 44px;
   }
 
@@ -187,7 +184,7 @@
 
   /* HIT gradient background */
   .hit-gradient {
-    background: linear-gradient(135deg, #E8F7F8 0%, #B8E6E8 50%, #7DD3DA 100%);
+    background: linear-gradient(135deg, #e8f7f8 0%, #b8e6e8 50%, #7dd3da 100%);
   }
 
   /* HIT brand card - Mobile responsive */
@@ -211,7 +208,7 @@
 
   /* HIT logo background */
   .hit-logo-bg {
-    background: linear-gradient(135deg, #007377 0%, #0097A7 100%);
+    background: linear-gradient(135deg, #007377 0%, #0097a7 100%);
   }
 
   /* Mobile-specific touch improvements */
@@ -239,12 +236,188 @@
       z-index: 100;
     }
   }
+
+  /* ========================
+     MODERN PROFESSIONAL STYLES
+     ======================== */
+
+  /* Glass morphism effect for sidebar */
+  .sidebar-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 115, 119, 0.95) 0%,
+      rgba(3, 47, 50, 0.95) 50%,
+      rgba(0, 115, 119, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Modern menu item with enhanced hover effects */
+  .sidebar-menu-item {
+    @apply relative transition-all duration-300 ease-out;
+    @apply hover:scale-[1.02] active:scale-[0.98];
+    @apply focus:outline-none focus:ring-2 focus:ring-white/30;
+  }
+
+  .sidebar-menu-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-menu-item:hover::before {
+    opacity: 1;
+  }
+
+  /* Active menu item with sophisticated styling */
+  .sidebar-menu-item-active {
+    @apply bg-white/15 text-white shadow-lg;
+    @apply border border-white/20;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Enhanced search input */
+  .search-input-modern {
+    @apply w-64 pl-10 pr-4 py-2.5 bg-gray-50/80 border border-gray-200/60;
+    @apply rounded-xl focus:outline-none focus:ring-2 focus:ring-hit-primary/20;
+    @apply focus:border-hit-primary transition-all duration-300 text-sm;
+    @apply hover:bg-gray-100/60 hover:border-gray-300/60;
+    backdrop-filter: blur(10px);
+  }
+
+  .search-input-modern:focus {
+    box-shadow: 0 0 0 3px rgba(0, 151, 167, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Modern button styles */
+  .modern-button {
+    @apply px-4 py-2.5 bg-gray-50/80 hover:bg-gray-100/80;
+    @apply border border-gray-200/60 rounded-xl transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-hit-primary/20;
+    @apply active:scale-95 transform;
+    backdrop-filter: blur(10px);
+  }
+
+  .modern-button:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  /* Notification badge */
+  .notification-badge {
+    @apply absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full;
+    @apply flex items-center justify-center text-white text-xs font-semibold;
+    @apply border-2 border-white shadow-sm;
+    animation: pulse-notification 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-notification {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* Dropdown animations */
+  .dropdown-modern {
+    @apply bg-white/95 backdrop-blur-xl border border-gray-200/60;
+    @apply rounded-2xl shadow-2xl;
+    animation: dropdownSlideIn 0.2s ease-out;
+    transform-origin: top;
+  }
+
+  @keyframes dropdownSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Status indicator pulse */
+  .status-pulse {
+    @apply h-2 w-2 bg-green-500 rounded-full;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.2);
+    }
+  }
+
+  /* Modern card styles */
+  .card-modern {
+    @apply bg-white/80 backdrop-blur-sm border border-gray-200/60;
+    @apply rounded-2xl shadow-sm hover:shadow-md transition-all duration-200;
+    @apply p-6 hover:bg-white/90;
+  }
+
+  .card-modern-elevated {
+    @apply bg-white backdrop-blur-xl border border-gray-200/60;
+    @apply rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply transform hover:-translate-y-1;
+  }
+
+  /* Enhanced typography */
+  .text-modern-heading {
+    @apply text-2xl lg:text-3xl font-bold text-gray-900;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .text-modern-subheading {
+    @apply text-base text-gray-600 mt-1;
+    line-height: 1.5;
+  }
+
+  /* Enhanced focus states */
+  .focus-modern:focus-visible {
+    @apply outline-none ring-2 ring-hit-primary/50 ring-offset-2;
+    @apply ring-offset-white;
+  }
+
+  /* Smooth hover scale for interactive elements */
+  .hover-scale {
+    @apply transition-transform duration-200 ease-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .hover-scale:active {
+    transform: scale(0.95);
+  }
 }
 
 /* Utility classes for HIT colors */
 @layer utilities {
   .text-hit-primary {
-    color: #0097A7;
+    color: #0097a7;
   }
 
   .text-hit-secondary {
@@ -252,15 +425,15 @@
   }
 
   .text-hit-dark {
-    color: #032F32;
+    color: #032f32;
   }
 
   .bg-hit-light {
-    background-color: #E8F7F8;
+    background-color: #e8f7f8;
   }
 
   .bg-hit-primary {
-    background-color: #0097A7;
+    background-color: #0097a7;
   }
 
   .bg-hit-secondary {
@@ -268,16 +441,78 @@
   }
 
   .bg-hit-dark {
-    background-color: #032F32;
+    background-color: #032f32;
   }
 
   /* HIT gradient utilities */
   .bg-hit-gradient {
-    background: linear-gradient(135deg, #E8F7F8 0%, #B8E6E8 50%, #7DD3DA 100%);
+    background: linear-gradient(135deg, #e8f7f8 0%, #b8e6e8 50%, #7dd3da 100%);
   }
 
   .bg-hit-gradient-reverse {
-    background: linear-gradient(135deg, #0097A7 0%, #007377 50%, #032F32 100%);
+    background: linear-gradient(135deg, #0097a7 0%, #007377 50%, #032f32 100%);
+  }
+
+  /* Professional spacing utilities */
+  .space-y-professional > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem; /* 12px */
+  }
+
+  .leading-professional {
+    line-height: 1.7;
+  }
+
+  .text-professional {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.7;
+  }
+
+  /* Modern shadows */
+  .shadow-modern {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .shadow-modern-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-modern-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Glass morphism utilities */
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .glass-effect-strong {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Perfect scrollbars */
+  .scrollbar-modern::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+
+  .scrollbar-modern::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
   }
 
   /* Mobile-specific utilities */
@@ -320,7 +555,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #E8F7F8;
+  background: #e8f7f8;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -329,11 +564,22 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0097A7;
+  background: #0097a7;
 }
 
 /* Mobile-specific improvements */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  .search-input-modern {
+    @apply w-48;
+  }
+
+  .text-modern-heading {
+    @apply text-xl;
+  }
+
+  .card-modern {
+    @apply p-4;
+  }
 
   /* Hide scrollbars on mobile for cleaner look */
   .mobile-hide-scrollbar {
@@ -368,17 +614,41 @@
   }
 }
 
-/* Accessibility improvements for mobile */
+/* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
-
+  .sidebar-menu-item,
+  .modern-button,
+  .dropdown-modern,
+  .hover-scale,
   .animate-bounce,
   .animate-spin,
   .transition-all,
   .transition-colors,
   .transition-transform {
-    animation: none !important;
     transition: none !important;
+    animation: none !important;
   }
+
+  .notification-badge,
+  .status-pulse {
+    animation: none;
+  }
+}
+
+/* Dark mode support for modern elements */
+.dark .modern-button {
+  @apply bg-gray-800/80 hover:bg-gray-700/80;
+  @apply border-gray-600/60 text-gray-200;
+}
+
+.dark .search-input-modern {
+  @apply bg-gray-800/80 border-gray-600/60 text-gray-200;
+  @apply placeholder-gray-400;
+}
+
+.dark .card-modern {
+  @apply bg-gray-800/80 border-gray-600/60;
+  @apply hover:bg-gray-800/90;
 }
 
 /* High contrast mode support */
@@ -389,5 +659,10 @@
 
   .text-hit-secondary {
     @apply text-hit-dark;
+  }
+
+  .sidebar-glass {
+    background: rgba(0, 115, 119, 1);
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
   }
 }
