@@ -1,3 +1,5 @@
+// src/components/Dashboard.tsx - Replace the entire Dashboard component
+
 import React, { useState } from "react";
 import {
   MessageCircle,
@@ -18,6 +20,7 @@ import {
 import ChatInterface from "./chat/ChatInterface";
 import PreferencesQuiz from "./preferences/PreferencesQuiz";
 import UserProfile from "./profile/UserProfile";
+import NotificationDropdown from "./layout/NotificationDropdown";
 import { useAuth } from "../context/AuthContext";
 
 type ActivePage = "chat" | "preferences" | "profile";
@@ -74,7 +77,7 @@ const Dashboard = () => {
     switch (activePage) {
       case "chat":
         return {
-          title: "MentorHIT Academic Assistant",
+          title: "MentorHIT",
           subtitle: "Your AI-powered guide to academic excellence",
           gradient: "from-hit-primary to-hit-secondary",
         };
@@ -92,7 +95,7 @@ const Dashboard = () => {
         };
       default:
         return {
-          title: "MentorHIT Academic Assistant",
+          title: "MentorHIT",
           subtitle: "Your AI-powered guide to academic excellence",
           gradient: "from-hit-primary to-hit-secondary",
         };
@@ -109,9 +112,9 @@ const Dashboard = () => {
   const pageInfo = getPageInfo();
 
   return (
-    <div className="h-screen bg-gradient-to-br from-hit-light/20 via-white to-gray-50/50 flex flex-col overflow-hidden">
-      {/* Enhanced Top Navigation Header */}
-      <header className="relative bg-white/95 backdrop-blur-xl border-b border-hit-primary/10 shadow-lg z-30">
+    <div className="h-screen bg-gradient-to-br from-hit-light/40 via-hit-light/20 to-hit-light/10 flex flex-col overflow-hidden">
+      {/* Enhanced Top Navigation Header - H.I.T COLORS */}
+      <header className="relative bg-gradient-to-r from-hit-light/80 to-hit-light/60 backdrop-blur-xl border-b border-hit-primary/20 shadow-lg z-30">
         {/* Gradient accent bar */}
         <div className={`h-1 bg-gradient-to-r ${pageInfo.gradient}`}></div>
 
@@ -122,7 +125,7 @@ const Dashboard = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="md:hidden p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 touch-manipulation group"
+                className="md:hidden p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/40 transition-all duration-200 touch-manipulation group"
                 style={{ minHeight: "48px", minWidth: "48px" }}
               >
                 <Menu className="h-6 w-6 group-hover:scale-110 transition-transform" />
@@ -134,54 +137,31 @@ const Dashboard = () => {
                   <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
                     <img
                       src="/logo-white-bg.png"
-                      alt="MentorHIT Logo"
                       className="h-8 w-8 rounded-lg z-10"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = "none";
-                        target.nextElementSibling?.classList.remove("hidden");
-                      }}
+                      alt="MentorHIT"
                     />
-                    <div className="hidden">
-                      <Sparkles className="h-7 w-7 text-white" />
-                    </div>
-                    {/* Subtle glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
                   </div>
-                  {/* Status indicator */}
-                  <div className="absolute -top-1 -right-1 h-4 w-4 bg-green-400 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
                 </div>
-                <div>
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-hit-dark to-hit-primary bg-clip-text text-transparent">
+
+                {/* Simplified centered title */}
+                <div className="text-center flex-1 max-w-md mx-8">
+                  <h1 className="text-2xl lg:text-3xl font-bold text-hit-dark mb-0">
                     MentorHIT
                   </h1>
-                  <p className="text-sm text-hit-secondary font-medium hidden sm:block">
-                    AI Academic Advisor
-                  </p>
                 </div>
               </div>
-            </div>
-
-            {/* Center: Enhanced Page Info */}
-            <div className="hidden lg:block text-center flex-1 max-w-md mx-8">
-              <h2 className="text-xl font-bold text-hit-dark mb-1">
-                {pageInfo.title}
-              </h2>
-              <p className="text-sm text-hit-secondary">{pageInfo.subtitle}</p>
             </div>
 
             {/* Right: Enhanced Navigation + User */}
             <div className="flex items-center space-x-2">
               {/* Search Button */}
-              <button className="hidden md:flex p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 touch-manipulation">
+              <button className="hidden md:flex p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/40 transition-all duration-200 touch-manipulation">
                 <Search className="h-5 w-5" />
               </button>
 
-              {/* Notifications */}
-              <button className="relative p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 touch-manipulation">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full"></span>
-              </button>
+              {/* Notifications - Use the new component */}
+              <NotificationDropdown />
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-1 ml-4">
@@ -193,8 +173,8 @@ const Dashboard = () => {
                       flex items-center space-x-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 touch-manipulation relative overflow-hidden group
                       ${
                         activePage === item.id
-                          ? `bg-gradient-to-r from-${item.color} to-${item.color}/80 text-white shadow-lg`
-                          : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/30"
+                          ? `bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg`
+                          : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/40"
                       }
                     `}
                     style={{ minHeight: "48px" }}
@@ -224,7 +204,7 @@ const Dashboard = () => {
 
               {/* Enhanced User Avatar */}
               <div className="relative group ml-4">
-                <button className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-hit-light/30 to-white/50 hover:from-hit-light/50 hover:to-white/70 border border-hit-primary/20 rounded-xl transition-all duration-200 backdrop-blur-sm">
+                <button className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-hit-light/50 to-hit-light/30 hover:from-hit-light/70 hover:to-hit-light/50 border border-hit-primary/30 rounded-xl transition-all duration-200 backdrop-blur-sm">
                   <div className="h-10 w-10 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-full flex items-center justify-center shadow-md overflow-hidden relative">
                     {user?.name.includes("noy") ? (
                       <img
@@ -257,65 +237,62 @@ const Dashboard = () => {
       {/* Enhanced Mobile Navigation Overlay */}
       {isMobileMenuOpen && (
         <>
-          {/* Backdrop with blur */}
+          {/* Backdrop */}
           <div
-            className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-md z-40 transition-opacity duration-300"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          {/* Enhanced Mobile Menu */}
-          <div className="md:hidden fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-xl shadow-2xl z-50 transform transition-transform duration-300">
-            {/* Mobile Menu Header */}
-            <div className="p-6 bg-gradient-to-r from-hit-primary to-hit-secondary text-white relative overflow-hidden">
-              <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center space-x-3">
-                  <div className="h-12 w-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                    <img
-                      src="/logo-white-bg.png"
-                      alt="MentorHIT"
-                      className="h-8 w-8 rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold">MentorHIT</h2>
-                    <p className="text-sm text-white/80">AI Academic Advisor</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors touch-manipulation"
-                  style={{ minHeight: "44px", minWidth: "44px" }}
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-            </div>
+          {/* Mobile Menu */}
+          <div className="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-hit-light/90 to-hit-light/70 backdrop-blur-xl shadow-2xl z-50 lg:hidden border-r border-hit-primary/20">
+            <nav className="h-full flex flex-col p-6">
+              {/* Close button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="self-end p-2 text-hit-secondary hover:text-hit-primary rounded-lg transition-colors mb-6"
+              >
+                <X className="h-6 w-6" />
+              </button>
 
-            {/* Enhanced Mobile Menu Items */}
-            <nav className="p-6 space-y-3">
-              <div className="space-y-2">
+              {/* Logo */}
+              <div className="flex items-center space-x-3 mb-8 pb-6 border-b border-hit-primary/20">
+                <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-xl flex items-center justify-center">
+                  <img
+                    src="/logo-white-bg.png"
+                    className="h-8 w-8 rounded-lg"
+                    alt="MentorHIT"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-hit-dark">MentorHIT</h3>
+                  <p className="text-sm text-hit-secondary">
+                    AI Academic Advisor
+                  </p>
+                </div>
+              </div>
+
+              {/* Main menu items */}
+              <div className="space-y-2 mb-6">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleMenuItemClick(item.id)}
                     className={`
-                      w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-left font-semibold transition-all duration-200 touch-manipulation relative overflow-hidden group
+                      w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-left transition-all duration-200 touch-manipulation
                       ${
                         activePage === item.id
-                          ? `bg-gradient-to-r from-${item.color} to-${item.color}/80 text-white shadow-lg`
+                          ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg"
                           : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50"
                       }
                     `}
-                    style={{ minHeight: "60px" }}
+                    style={{ minHeight: "56px" }}
                   >
-                    <item.icon className="h-6 w-6 flex-shrink-0" />
+                    <item.icon className="h-6 w-6" />
                     <span className="text-lg flex-1">{item.label}</span>
                     {item.badge && (
                       <span
                         className={`
-                        px-3 py-1 rounded-full text-sm font-bold
+                        px-2 py-1 rounded-full text-sm font-semibold
                         ${
                           activePage === item.id
                             ? "bg-white/20 text-white"
@@ -373,8 +350,8 @@ const Dashboard = () => {
         </>
       )}
 
-      {/* Main Content Area with enhanced spacing */}
-      <main className="flex-1 overflow-hidden">
+      {/* Main Content Area with H.I.T colors */}
+      <main className="flex-1 overflow-hidden bg-gradient-to-br from-hit-light/20 to-hit-light/10">
         <div className="h-full">{renderPage()}</div>
       </main>
     </div>

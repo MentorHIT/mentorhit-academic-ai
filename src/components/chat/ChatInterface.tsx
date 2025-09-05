@@ -1,3 +1,4 @@
+// src/components/chat/ChatInterface.tsx
 import React, { useState, useRef, useEffect } from "react";
 import {
   Send,
@@ -115,10 +116,10 @@ const ChatInterface = () => {
 
       {/* Chat Messages Area - Enhanced UX Design */}
       <div className="flex-1 overflow-hidden relative z-10">
-        <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent">
+        <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent bg-gradient-to-b from-hit-light/15 to-hit-light/5">
           {/* Messages container with professional spacing */}
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 min-h-full">
-            {/* Enhanced Welcome State */}
+            {/* Enhanced Welcome State - ORIGINAL HEBREW TEXT */}
             {messages.length === 0 && (
               <div className="text-center py-12 sm:py-16 px-6 animate-fadeIn">
                 {/* Hero Logo with glow effect */}
@@ -143,7 +144,7 @@ const ChatInterface = () => {
                   </div>
                 </div>
 
-                {/* Enhanced welcome text */}
+                {/* Enhanced welcome text - Keep original Hebrew welcome */}
                 <div className="mb-8">
                   <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-hit-dark via-hit-primary to-hit-secondary bg-clip-text text-transparent mb-4 leading-tight">
                     ברוכים הבאים ל-MentorHIT
@@ -171,8 +172,8 @@ const ChatInterface = () => {
                   ))}
                 </div>
 
-                {/* Enhanced CTA */}
-                <div className="bg-gradient-to-r from-hit-light/50 to-white/50 backdrop-blur-sm rounded-2xl p-6 border border-hit-primary/20 max-w-md mx-auto">
+                {/* Enhanced CTA - HIT Colors */}
+                <div className="bg-gradient-to-r from-hit-light/70 to-hit-light/50 backdrop-blur-sm rounded-2xl p-6 border border-hit-primary/30 max-w-md mx-auto">
                   <p className="text-hit-secondary text-base mb-4">
                     או הקלידו שאלה בתיבה למטה
                   </p>
@@ -205,14 +206,14 @@ const ChatInterface = () => {
             {/* Enhanced Typing Indicator */}
             {isTyping && (
               <div className="flex items-start justify-start group animate-slideIn">
-                <div className="flex-shrink-0 mr-4">
-                  <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-2xl flex items-center justify-center shadow-lg relative">
+                <div className="flex-shrink-0 mr-4 mt-1">
+                  <div className="h-8 w-8 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-full flex items-center justify-center shadow-sm relative">
                     <img
                       src="/logo-white-bg.png"
-                      className="h-8 w-8 rounded-lg z-10"
+                      className="h-5 w-5 rounded z-10"
                       alt="MentorHIT"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
                   </div>
                 </div>
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-6 py-4 border border-hit-secondary/20 shadow-md">
@@ -235,15 +236,6 @@ const ChatInterface = () => {
         </div>
       </div>
 
-      {/* Suggested Prompts - Only show when minimal chat */}
-      {messages.length > 0 && messages.length <= 2 && (
-        <div className="px-4 sm:px-6 pb-4 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <SuggestedPrompts onPromptClick={handleSuggestedPrompt} />
-          </div>
-        </div>
-      )}
-
       {/* Enhanced Input Area - Professional Design */}
       <div className="relative z-10">
         {/* Input container with enhanced styling */}
@@ -256,63 +248,51 @@ const ChatInterface = () => {
                 relative bg-white rounded-3xl border-2 transition-all duration-300 shadow-lg overflow-hidden
                 ${
                   isInputFocused
-                    ? "border-hit-primary shadow-hit-primary/20 shadow-2xl"
-                    : "border-hit-primary/30 hover:border-hit-primary/50"
+                    ? "border-hit-primary shadow-hit-primary/20"
+                    : "border-hit-secondary/30 hover:border-hit-primary/50"
                 }
               `}
               >
-                {/* Input field with enhanced design */}
+                {/* Enhanced textarea */}
                 <textarea
                   ref={textareaRef}
                   value={inputValue}
                   onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
-                  placeholder="שאלו על קורסים, ייעוץ קריירה או תכנון אקדמי..."
-                  className="
-                    w-full px-6 py-5 pr-24 resize-none bg-transparent
-                    text-xl leading-relaxed font-medium text-hit-dark placeholder:text-hit-secondary/50
-                    focus:outline-none
-                  "
+                  placeholder="כתבו את השאלה שלכם כאן..."
+                  rows={1}
+                  className="w-full px-6 py-5 pr-20 bg-transparent border-none outline-none resize-none text-lg placeholder:text-hit-secondary/50 leading-relaxed"
                   style={{
-                    minHeight: "68px",
                     maxHeight: "160px",
-                    textAlign: containsHebrew(inputValue) ? "right" : "left",
-                    fontSize: "18px", // Prevent zoom on iOS
+                    minHeight: "64px",
                   }}
-                  dir={containsHebrew(inputValue) ? "rtl" : "ltr"}
-                  disabled={isTyping}
                 />
 
-                {/* Input actions area */}
-                <div className="absolute bottom-4 left-4 flex items-center space-x-2">
-                  {/* Additional action buttons */}
+                {/* Enhanced action buttons */}
+                <div className="absolute left-2 bottom-2 flex items-center space-x-2">
+                  {/* Additional action buttons for future features */}
                   <button
                     type="button"
-                    className="p-2 text-hit-secondary/60 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200"
-                    title="הוסף קובץ"
+                    className="p-3 text-hit-secondary/50 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
                   >
                     <Paperclip className="h-5 w-5" />
                   </button>
 
                   <button
                     type="button"
-                    className="p-2 text-hit-secondary/60 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200"
-                    title="הקלטה קולית"
+                    className="p-3 text-hit-secondary/50 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
                   >
                     <Mic className="h-5 w-5" />
                   </button>
-                </div>
 
-                {/* Enhanced Send Button */}
-                <div className="absolute bottom-4 right-4">
+                  {/* Enhanced send button */}
                   <button
                     type="submit"
                     disabled={!inputValue.trim() || isTyping}
                     className={`
-                      relative overflow-hidden rounded-2xl transition-all duration-300 shadow-lg
-                      flex items-center justify-center group
+                      relative group rounded-2xl transition-all duration-300 transform overflow-hidden
                       ${
                         inputValue.trim() && !isTyping
                           ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white hover:shadow-xl hover:scale-105 active:scale-95"
