@@ -136,7 +136,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
       >
         {/* User messages: Keep styled bubble for contrast */}
         {isUser ? (
-          <div className="bg-gradient-to-br from-hit-dark via-hit-secondary to-hit-dark text-white rounded-2xl px-5 py-4 shadow-lg ml-auto">
+          <div className="bg-hit-dark text-white rounded-2xl px-5 py-4 shadow-lg ml-auto">
             <div
               className={`text-base leading-relaxed ${
                 containsHebrew(message.text) ? "text-right" : "text-left"
@@ -172,25 +172,76 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
               {formatTime(message.timestamp)}
             </div>
 
-            {/* Job data display if present - also minimal styling */}
-            {jobData && (
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg border-l-4 border-hit-primary">
-                <h4 className="font-semibold text-hit-dark mb-2">
-                  פרטי משרה רלוונטית:
+            {/* Rich Job Interface from AWS */}
+            {jobData && jobData.jobs && (
+              <div className="mt-6">
+                <h4 className="font-semibold text-hit-dark mb-4 text-right">
+                  משרות מומלצות ({jobData.jobs.length})
                 </h4>
-                <div className="space-y-2 text-sm text-gray-700">
-                  <div>
-                    <strong>חברה:</strong> {jobData.company}
-                  </div>
-                  <div>
-                    <strong>תפקיד:</strong> {jobData.title}
-                  </div>
-                  <div>
-                    <strong>מיקום:</strong> {jobData.location}
-                  </div>
-                  <div>
-                    <strong>דרישות:</strong> {jobData.requirements}
-                  </div>
+                <div className="grid gap-4">
+                  {jobData.jobs.map((job, index) => (
+                    <div
+                      key={index}
+                      className="bg-white rounded-xl border border-hit-primary/20 p-4 hover:shadow-lg transition-all"
+                    >
+                      <div className="flex items-start gap-4">
+                        {/* Company Logo */}
+                        <div className="flex-shrink-0">
+                          {job.logo ? (
+                            <img
+                              src={job.logo}
+                              alt={job.company}
+                              className="w-12 h-12 rounded-lg"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 bg-hit-light rounded-lg flex items-center justify-center">
+                              <span className="text-hit-secondary font-bold text-sm">
+                                {job.company.charAt(0)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Job Info */}
+                        <div className="flex-1 text-right">
+                          <h5 className="font-bold text-hit-dark">
+                            {job.title}
+                          </h5>
+                          <p className="text-hit-secondary font-medium">
+                            {job.company}
+                          </p>
+                          <p className="text-sm text-gray-600 mb-2">
+                            {job.location}
+                          </p>
+
+                          {/* Match Score */}
+                          <div className="flex items-center justify-end gap-2 mb-2">
+                            <span className="text-sm font-medium">התאמה:</span>
+                            <div className="bg-hit-primary text-white px-2 py-1 rounded-full text-sm font-bold">
+                              {Math.round(job.match_score * 100)}%
+                            </div>
+                          </div>
+
+                          {/* Salary */}
+                          <p className="text-hit-secondary font-semibold mb-2">
+                            {job.salary}
+                          </p>
+
+                          {/* Skills */}
+                          <div className="flex flex-wrap gap-1 justify-end">
+                            {job.skills.slice(0, 4).map((skill, skillIndex) => (
+                              <span
+                                key={skillIndex}
+                                className="bg-hit-light text-hit-dark px-2 py-1 rounded-full text-xs"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

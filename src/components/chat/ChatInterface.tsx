@@ -267,11 +267,13 @@ const ChatInterface = () => {
                   style={{
                     maxHeight: "160px",
                     minHeight: "64px",
+                    direction: "rtl",
+                    textAlign: "right",
                   }}
                 />
 
                 {/* Enhanced action buttons */}
-                <div className="absolute left-2 bottom-2 flex items-center space-x-2">
+                <div className="absolute right-2 bottom-3 flex items-center space-x-2">
                   {/* Additional action buttons for future features */}
                   <button
                     type="button"
