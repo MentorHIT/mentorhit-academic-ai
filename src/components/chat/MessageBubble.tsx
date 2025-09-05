@@ -136,7 +136,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
       >
         {/* User messages: Keep styled bubble for contrast */}
         {isUser ? (
-          <div className="bg-hit-dark text-white rounded-2xl px-5 py-4 shadow-lg ml-auto">
+          <div className="bg-hit-primary text-white rounded-2xl px-5 py-4 shadow-lg ml-auto">
             <div
               className={`text-base leading-relaxed ${
                 containsHebrew(message.text) ? "text-right" : "text-left"
