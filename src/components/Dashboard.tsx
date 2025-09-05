@@ -112,9 +112,9 @@ const Dashboard = () => {
   const pageInfo = getPageInfo();
 
   return (
-    <div className="h-screen bg-gradient-to-br from-hit-light/40 via-hit-light/20 to-hit-light/10 flex flex-col overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-hit-light/60 via-hit-primary/10 to-hit-secondary/10 flex flex-col overflow-hidden">
       {/* Enhanced Top Navigation Header - H.I.T COLORS */}
-      <header className="relative bg-gradient-to-r from-hit-light/80 to-hit-light/60 backdrop-blur-xl border-b border-hit-primary/20 shadow-lg z-30">
+      <header className="relative bg-gradient-to-r from-hit-light/90 to-white/80 backdrop-blur-xl border-b border-hit-primary/30 shadow-lg z-30">
         {/* Gradient accent bar */}
         <div className={`h-1 bg-gradient-to-r ${pageInfo.gradient}`}></div>
 
@@ -351,7 +351,7 @@ const Dashboard = () => {
       )}
 
       {/* Main Content Area with H.I.T colors */}
-      <main className="flex-1 overflow-hidden bg-gradient-to-br from-hit-light/20 to-hit-light/10">
+      <main className="flex-1 overflow-hidden bg-gradient-to-br from-hit-light/30 to-white/20">
         <div className="h-full">{renderPage()}</div>
       </main>
     </div>

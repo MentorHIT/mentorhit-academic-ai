@@ -4,108 +4,64 @@
 
 @layer base {
   :root {
-    /* HIT Official Color Palette */
-    --background: 232 46% 97%;
-    /* #E8F7F8 - Light blue background */
-    --foreground: 185 74% 10%;
-    /* #032F32 - Dark teal for text */
-
-    --card: 0 0% 100%;
-    /* White cards for contrast */
+    /* HIT Color Variables - Light Mode */
+    --background: 232 46% 97%; /* #E8F7F8 */
+    --foreground: 185 74% 10%; /* #032F32 */
+    --card: 0 0% 100%; /* White */
     --card-foreground: 185 74% 10%;
-    /* #032F32 - Dark teal text on cards */
-
     --popover: 0 0% 100%;
     --popover-foreground: 185 74% 10%;
 
-    /* Primary colors - Main interface elements */
-    --primary: 185 100% 33%;
-    /* #0097A7 - Main headlines/titles */
+    --primary: 185 100% 33%; /* #0097A7 */
     --primary-foreground: 0 0% 100%;
-    /* White text on primary */
-
-    /* Secondary colors - Sidebar and interface elements */
-    --secondary: 187 100% 23%;
-    /* #007377 - Sidebar titles */
+    --secondary: 187 100% 23%; /* #007377 */
     --secondary-foreground: 0 0% 100%;
-    /* White text on secondary */
 
-    /* Chat-specific colors */
-    --chat-primary: 185 74% 10%;
-    /* #032F32 - For chat bubbles */
+    --chat-primary: 185 74% 10%; /* #032F32 */
     --chat-primary-foreground: 0 0% 100%;
 
-    /* Muted colors for less prominent elements */
     --muted: 232 46% 95%;
-    /* Lighter version of background */
     --muted-foreground: 185 20% 40%;
-    /* Muted text */
-
-    /* Accent colors */
     --accent: 232 46% 90%;
-    /* Accent backgrounds */
     --accent-foreground: 185 74% 10%;
 
-    /* Status colors */
     --destructive: 0 84.2% 60.2%;
-    /* Error red */
     --destructive-foreground: 0 0% 100%;
 
-    /* Border and input colors */
     --border: 187 30% 85%;
-    /* Subtle borders */
     --input: 187 30% 92%;
-    /* Input backgrounds */
     --ring: 185 100% 33%;
-    /* Focus rings - primary color */
-
     --radius: 0.5rem;
 
-    /* Sidebar-specific HIT colors */
+    /* Sidebar Colors */
     --sidebar-background: 187 100% 23%;
-    /* #007377 - Sidebar background */
     --sidebar-foreground: 0 0% 100%;
-    /* White text in sidebar */
     --sidebar-primary: 185 100% 33%;
-    /* #0097A7 - Active items */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 187 100% 30%;
-    /* Slightly lighter for hover */
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 187 100% 20%;
-    /* Darker border in sidebar */
     --sidebar-ring: 185 100% 33%;
-    /* Focus ring in sidebar */
   }
 
   .dark {
-    /* Dark mode with HIT colors */
+    /* HIT Colors - Dark Mode */
     --background: 185 74% 5%;
-    /* Very dark teal */
     --foreground: 232 46% 97%;
-    /* Light blue text */
-
     --card: 185 74% 8%;
     --card-foreground: 232 46% 97%;
-
     --popover: 185 74% 8%;
     --popover-foreground: 232 46% 97%;
 
     --primary: 185 100% 33%;
-    /* #0097A7 remains primary */
     --primary-foreground: 0 0% 100%;
-
     --secondary: 187 100% 23%;
-    /* #007377 remains secondary */
     --secondary-foreground: 0 0% 100%;
-
     --chat-primary: 185 100% 33%;
-    /* Lighter chat in dark mode */
     --chat-primary-foreground: 0 0% 100%;
 
     --muted: 185 74% 12%;
     --muted-foreground: 232 20% 70%;
-
     --accent: 185 74% 15%;
     --accent-foreground: 232 46% 97%;
 
@@ -125,9 +81,7 @@
     --sidebar-border: 185 74% 15%;
     --sidebar-ring: 185 100% 33%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -135,860 +89,18 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Inter", system-ui, sans-serif;
-    /* Prevent zooming on iOS when focusing inputs */
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Smooth scrolling for better UX */
   html {
     scroll-behavior: smooth;
-    /* Prevent horizontal scrolling on mobile */
     overflow-x: hidden;
   }
-
-  /* Mobile viewport adjustments */
-  @media screen and (max-width: 768px) {
-    html,
-    body {
-      overflow-x: hidden;
-      position: relative;
-    }
-  }
 }
 
-/* HIT-specific component styles */
-@layer components {
-  /* Primary button with HIT colors - Mobile optimized */
-  .btn-hit-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2;
-    min-height: 44px;
-  }
-
-  /* Secondary button with HIT colors */
-  .btn-hit-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 focus:ring-2 focus:ring-secondary focus:ring-offset-2;
-    min-height: 44px;
-  }
-
-  /* Chat bubble styling - Mobile responsive */
-  .chat-bubble-user {
-    @apply bg-primary text-primary-foreground;
-    /* Mobile: Better spacing */
-    @apply px-3 py-2 lg:px-4 lg:py-3;
-  }
-
-  .chat-bubble-ai {
-    @apply bg-card text-card-foreground border border-border;
-    @apply px-3 py-2 lg:px-4 lg:py-3;
-  }
-
-  /* HIT gradient background */
-  .hit-gradient {
-    background: linear-gradient(135deg, #e8f7f8 0%, #b8e6e8 50%, #7dd3da 100%);
-  }
-
-  /* HIT brand card - Mobile responsive */
-  .hit-card {
-    @apply bg-card border border-border shadow-sm rounded-lg;
-    /* Mobile: Better touch targets and spacing */
-    @apply p-3 lg:p-4;
-  }
-
-  /* Sidebar specific styles - Mobile responsive */
-  .sidebar-item {
-    @apply text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
-    /* Mobile: Larger touch targets */
-    min-height: 48px;
-    @apply px-4 py-3 lg:py-2;
-  }
-
-  .sidebar-item-active {
-    @apply bg-sidebar-primary text-sidebar-primary-foreground;
-  }
-
-  /* HIT logo background */
-  .hit-logo-bg {
-    background: linear-gradient(135deg, #007377 0%, #0097a7 100%);
-  }
-
-  /* Mobile-specific touch improvements */
-  .touch-manipulation {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Safe area support for mobile devices */
-  .safe-area-inset-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .safe-area-inset-top {
-    padding-top: env(safe-area-inset-top);
-  }
-
-  /* Mobile keyboard handling */
-  @media screen and (max-height: 600px) {
-    .chat-input-area {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-    }
-  }
-
-  /* ========================
-     MODERN PROFESSIONAL STYLES
-     ======================== */
-
-  /* Glass morphism effect for sidebar */
-  .sidebar-glass {
-    background: linear-gradient(
-      135deg,
-      rgba(0, 115, 119, 0.95) 0%,
-      rgba(3, 47, 50, 0.95) 50%,
-      rgba(0, 115, 119, 0.95) 100%
-    );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Modern menu item with enhanced hover effects */
-  .sidebar-menu-item {
-    @apply relative transition-all duration-300 ease-out;
-    @apply hover:scale-[1.02] active:scale-[0.98];
-    @apply focus:outline-none focus:ring-2 focus:ring-white/30;
-  }
-
-  .sidebar-menu-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), transparent);
-    border-radius: 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .sidebar-menu-item:hover::before {
-    opacity: 1;
-  }
-
-  /* Active menu item with sophisticated styling */
-  .sidebar-menu-item-active {
-    @apply bg-white/15 text-white shadow-lg;
-    @apply border border-white/20;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  /* Enhanced search input */
-  .search-input-modern {
-    @apply w-64 pl-10 pr-4 py-2.5 bg-gray-50/80 border border-gray-200/60;
-    @apply rounded-xl focus:outline-none focus:ring-2 focus:ring-hit-primary/20;
-    @apply focus:border-hit-primary transition-all duration-300 text-sm;
-    @apply hover:bg-gray-100/60 hover:border-gray-300/60;
-    backdrop-filter: blur(10px);
-  }
-
-  .search-input-modern:focus {
-    box-shadow: 0 0 0 3px rgba(0, 151, 167, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Modern button styles */
-  .modern-button {
-    @apply px-4 py-2.5 bg-gray-50/80 hover:bg-gray-100/80;
-    @apply border border-gray-200/60 rounded-xl transition-all duration-200;
-    @apply focus:outline-none focus:ring-2 focus:ring-hit-primary/20;
-    @apply active:scale-95 transform;
-    backdrop-filter: blur(10px);
-  }
-
-  .modern-button:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.15);
-  }
-
-  /* Notification badge */
-  .notification-badge {
-    @apply absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full;
-    @apply flex items-center justify-center text-white text-xs font-semibold;
-    @apply border-2 border-white shadow-sm;
-    animation: pulse-notification 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-notification {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-  }
-
-  /* Dropdown animations */
-  .dropdown-modern {
-    @apply bg-white/95 backdrop-blur-xl border border-gray-200/60;
-    @apply rounded-2xl shadow-2xl;
-    animation: dropdownSlideIn 0.2s ease-out;
-    transform-origin: top;
-  }
-
-  @keyframes dropdownSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-8px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  /* Status indicator pulse */
-  .status-pulse {
-    @apply h-2 w-2 bg-green-500 rounded-full;
-    animation: statusPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes statusPulse {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.2);
-    }
-  }
-
-  /* Modern card styles */
-  .card-modern {
-    @apply bg-white/80 backdrop-blur-sm border border-gray-200/60;
-    @apply rounded-2xl shadow-sm hover:shadow-md transition-all duration-200;
-    @apply p-6 hover:bg-white/90;
-  }
-
-  .card-modern-elevated {
-    @apply bg-white backdrop-blur-xl border border-gray-200/60;
-    @apply rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
-    @apply transform hover:-translate-y-1;
-  }
-
-  /* Enhanced typography */
-  .text-modern-heading {
-    @apply text-2xl lg:text-3xl font-bold text-gray-900;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-  }
-
-  .text-modern-subheading {
-    @apply text-base text-gray-600 mt-1;
-    line-height: 1.5;
-  }
-
-  /* Enhanced focus states */
-  .focus-modern:focus-visible {
-    @apply outline-none ring-2 ring-hit-primary/50 ring-offset-2;
-    @apply ring-offset-white;
-  }
-
-  /* Smooth hover scale for interactive elements */
-  .hover-scale {
-    @apply transition-transform duration-200 ease-out;
-  }
-
-  .hover-scale:hover {
-    transform: scale(1.05);
-  }
-
-  .hover-scale:active {
-    transform: scale(0.95);
-  }
-}
-
-/* Utility classes for HIT colors */
+/* Essential Animations */
 @layer utilities {
-  .text-hit-primary {
-    color: #0097a7;
-  }
-
-  .text-hit-secondary {
-    color: #007377;
-  }
-
-  .text-hit-dark {
-    color: #032f32;
-  }
-
-  .bg-hit-light {
-    background-color: #e8f7f8;
-  }
-
-  .bg-hit-primary {
-    background-color: #0097a7;
-  }
-
-  .bg-hit-secondary {
-    background-color: #007377;
-  }
-
-  .bg-hit-dark {
-    background-color: #032f32;
-  }
-
-  /* HIT gradient utilities */
-  .bg-hit-gradient {
-    background: linear-gradient(135deg, #e8f7f8 0%, #b8e6e8 50%, #7dd3da 100%);
-  }
-
-  .bg-hit-gradient-reverse {
-    background: linear-gradient(135deg, #0097a7 0%, #007377 50%, #032f32 100%);
-  }
-
-  /* Professional spacing utilities */
-  .space-y-professional > :not([hidden]) ~ :not([hidden]) {
-    margin-top: 0.75rem; /* 12px */
-  }
-
-  .leading-professional {
-    line-height: 1.7;
-  }
-
-  .text-professional {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.7;
-  }
-
-  /* Modern shadows */
-  .shadow-modern {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  .shadow-modern-lg {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  }
-
-  .shadow-modern-xl {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-
-  /* Glass morphism utilities */
-  .glass-effect {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  .glass-effect-strong {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  /* Perfect scrollbars */
-  .scrollbar-modern::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .scrollbar-modern::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 3px;
-  }
-
-  .scrollbar-modern::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    transition: background 0.2s ease;
-  }
-
-  .scrollbar-modern::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
-  }
-
-  /* Mobile-specific utilities */
-  .mobile-full-height {
-    height: 100vh;
-    height: 100dvh;
-    /* Dynamic viewport height for mobile */
-  }
-
-  .mobile-touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Text size responsive */
-  .text-responsive {
-    @apply text-sm lg:text-base;
-  }
-
-  .text-responsive-lg {
-    @apply text-base lg:text-lg;
-  }
-
-  .text-responsive-xl {
-    @apply text-lg lg:text-xl;
-  }
-}
-
-/* Custom scrollbar with HIT colors - Mobile friendly */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-@media screen and (min-width: 768px) {
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-}
-
-::-webkit-scrollbar-track {
-  background: #e8f7f8;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #007377;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #0097a7;
-}
-
-/* Mobile-specific improvements */
-@media (max-width: 768px) {
-  .search-input-modern {
-    @apply w-48;
-  }
-
-  .text-modern-heading {
-    @apply text-xl;
-  }
-
-  .card-modern {
-    @apply p-4;
-  }
-
-  /* Hide scrollbars on mobile for cleaner look */
-  .mobile-hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .mobile-hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Improve form inputs on mobile */
-  input[type="email"],
-  input[type="password"],
-  input[type="text"],
-  textarea {
-    font-size: 16px;
-    /* Prevent zoom on iOS */
-    transform: translateZ(0);
-    /* Force hardware acceleration */
-  }
-
-  /* Improve button interactions */
-  button {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Better mobile animations */
-  .animate-bounce {
-    animation-duration: 1s;
-  }
-}
-
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-  .sidebar-menu-item,
-  .modern-button,
-  .dropdown-modern,
-  .hover-scale,
-  .animate-bounce,
-  .animate-spin,
-  .transition-all,
-  .transition-colors,
-  .transition-transform {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .notification-badge,
-  .status-pulse {
-    animation: none;
-  }
-}
-
-/* Dark mode support for modern elements */
-.dark .modern-button {
-  @apply bg-gray-800/80 hover:bg-gray-700/80;
-  @apply border-gray-600/60 text-gray-200;
-}
-
-.dark .search-input-modern {
-  @apply bg-gray-800/80 border-gray-600/60 text-gray-200;
-  @apply placeholder-gray-400;
-}
-
-.dark .card-modern {
-  @apply bg-gray-800/80 border-gray-600/60;
-  @apply hover:bg-gray-800/90;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .border-gray-200 {
-    @apply border-gray-400;
-  }
-
-  .text-hit-secondary {
-    @apply text-hit-dark;
-  }
-
-  .sidebar-glass {
-    background: rgba(0, 115, 119, 1);
-    border-right: 2px solid rgba(255, 255, 255, 0.3);
-  }
-}
-
-/* ======================================================================
-   MOBILE-FIRST CSS UPDATES FOR MENTORHIT
-   Add these styles to your existing index.css file
-   ====================================================================== */
-
-@layer components {
-  /* ========================
-     MOBILE-FIRST TYPOGRAPHY
-     ======================== */
-
-  /* Base mobile typography - Enlarged fonts */
-  .mobile-text-base {
-    font-size: 18px; /* Prevent iOS zoom */
-    line-height: 1.6;
-  }
-
-  .mobile-text-lg {
-    font-size: 20px;
-    line-height: 1.6;
-  }
-
-  .mobile-text-xl {
-    font-size: 22px;
-    line-height: 1.5;
-  }
-
-  .mobile-text-2xl {
-    font-size: 26px;
-    line-height: 1.4;
-  }
-
-  /* ========================
-     TOUCH-FRIENDLY ELEMENTS
-     ======================== */
-
-  /* Minimum touch target sizes */
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .touch-target-lg {
-    min-height: 56px;
-    min-width: 56px;
-  }
-
-  /* Touch manipulation for better mobile interaction */
-  .touch-optimized {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* ========================
-     COLOR-CODED MESSAGING
-     ======================== */
-
-  /* Student messages - HIT Dark theme */
-  .message-student {
-    background: linear-gradient(135deg, #032f32 0%, #007377 100%);
-    color: white;
-    border: 2px solid rgba(3, 47, 50, 0.3);
-  }
-
-  /* Mentor/AI messages - HIT Light theme */
-  .message-mentor {
-    background: linear-gradient(
-      135deg,
-      #ffffff 0%,
-      rgba(232, 247, 248, 0.8) 100%
-    );
-    color: #032f32;
-    border: 2px solid rgba(0, 151, 167, 0.2);
-    backdrop-filter: blur(10px);
-  }
-
-  /* Avatar styling for different roles */
-  .avatar-student {
-    background: linear-gradient(135deg, #007377 0%, #032f32 100%);
-  }
-
-  .avatar-mentor {
-    background: linear-gradient(135deg, #0097a7 0%, #007377 100%);
-  }
-
-  /* ========================
-     MOBILE-OPTIMIZED LAYOUTS
-     ======================== */
-
-  /* Mobile navigation */
-  .mobile-nav {
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0, 115, 119, 0.1);
-  }
-
-  /* Mobile menu overlay */
-  .mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    z-index: 40;
-  }
-
-  /* Mobile menu panel */
-  .mobile-menu-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 320px;
-    max-width: 85vw;
-    background: white;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .mobile-menu-panel.open {
-    transform: translateX(0);
-  }
-
-  /* ========================
-     CHAT INTERFACE MOBILE
-     ======================== */
-
-  /* Mobile chat container */
-  .chat-mobile-container {
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport height for mobile */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* Mobile message spacing */
-  .message-mobile-spacing {
-    margin-bottom: 1.5rem;
-  }
-
-  /* Mobile input area */
-  .chat-input-mobile {
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(0, 115, 119, 0.2);
-  }
-
-  /* Mobile textarea */
-  .chat-textarea-mobile {
-    min-height: 56px;
-    max-height: 140px;
-    font-size: 18px; /* Prevent zoom on iOS */
-    line-height: 1.5;
-    padding: 16px;
-    border-radius: 16px;
-    border: 2px solid rgba(0, 115, 119, 0.3);
-    background: rgba(255, 255, 255, 0.95);
-    transition: all 0.2s ease;
-  }
-
-  .chat-textarea-mobile:focus {
-    border-color: #0097a7;
-    box-shadow: 0 0 0 3px rgba(0, 151, 167, 0.1);
-    outline: none;
-  }
-
-  /* Mobile send button */
-  .send-button-mobile {
-    min-height: 56px;
-    min-width: 56px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #0097a7 0%, #007377 100%);
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 151, 167, 0.3);
-    transition: all 0.2s ease;
-  }
-
-  .send-button-mobile:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0, 151, 167, 0.4);
-  }
-
-  .send-button-mobile:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  /* ========================
-     SUGGESTED PROMPTS MOBILE
-     ======================== */
-
-  .suggested-prompt-mobile {
-    padding: 16px 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border: 2px solid rgba(0, 151, 167, 0.2);
-    border-radius: 12px;
-    transition: all 0.2s ease;
-    text-align: right;
-    min-height: 80px;
-    backdrop-filter: blur(10px);
-  }
-
-  .suggested-prompt-mobile:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(0, 151, 167, 0.4);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 151, 167, 0.15);
-  }
-
-  /* ========================
-     LOGO AND BRANDING
-     ======================== */
-
-  .logo-container-mobile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .logo-mobile {
-    height: 40px;
-    width: 40px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0097a7 0%, #007377 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 151, 167, 0.2);
-  }
-
-  .brand-text-mobile {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .brand-title-mobile {
-    font-size: 20px;
-    font-weight: 700;
-    color: #032f32;
-    line-height: 1.2;
-  }
-
-  .brand-subtitle-mobile {
-    font-size: 14px;
-    color: #007377;
-    line-height: 1.2;
-  }
-
-  /* ========================
-     RESPONSIVE UTILITIES
-     ======================== */
-
-  /* Show only on mobile */
-  .mobile-only {
-    display: block;
-  }
-
-  /* Hide on mobile */
-  .mobile-hidden {
-    display: none;
-  }
-
-  /* Tablet and up */
-  @media (min-width: 768px) {
-    .mobile-only {
-      display: none;
-    }
-
-    .mobile-hidden {
-      display: block;
-    }
-
-    .mobile-text-base {
-      font-size: 16px;
-    }
-
-    .mobile-text-lg {
-      font-size: 18px;
-    }
-
-    .mobile-text-xl {
-      font-size: 20px;
-    }
-
-    .mobile-text-2xl {
-      font-size: 24px;
-    }
-  }
-
-  /* ========================
-     ANIMATIONS FOR MOBILE
-     ======================== */
-
-  /* Smooth slide in for mobile menu */
-  @keyframes slideInFromLeft {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slideOutToLeft {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
-  }
-
-  /* Message appear animation */
-  @keyframes messageSlideIn {
+  @keyframes fadeIn {
     from {
       opacity: 0;
       transform: translateY(10px);
@@ -999,229 +111,17 @@
     }
   }
 
-  .message-animate {
-    animation: messageSlideIn 0.3s ease-out;
-  }
-
-  /* Tap feedback */
-  @keyframes tapFeedback {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(0.95);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  .tap-feedback:active {
-    animation: tapFeedback 0.1s ease-out;
-  }
-
-  /* ========================
-     ACCESSIBILITY IMPROVEMENTS
-     ======================== */
-
-  /* Focus states for mobile */
-  .focus-mobile:focus-visible {
-    outline: 3px solid #0097a7;
-    outline-offset: 2px;
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    .message-student {
-      background: #000000;
-      border: 3px solid #ffffff;
-    }
-
-    .message-mentor {
-      background: #ffffff;
-      border: 3px solid #000000;
-      color: #000000;
-    }
-  }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .mobile-menu-panel,
-    .message-animate,
-    .tap-feedback,
-    .suggested-prompt-mobile,
-    .send-button-mobile {
-      animation: none;
-      transition: none;
-    }
-  }
-
-  /* ========================
-     SAFE AREAS FOR MOBILE
-     ======================== */
-
-  /* iPhone notch support */
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top);
-  }
-
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .safe-area-left {
-    padding-left: env(safe-area-inset-left);
-  }
-
-  .safe-area-right {
-    padding-right: env(safe-area-inset-right);
-  }
-
-  /* ========================
-     PERFORMANCE OPTIMIZATIONS
-     ======================== */
-
-  /* GPU acceleration for smooth animations */
-  .gpu-accelerated {
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  /* Optimized scrolling */
-  .smooth-scroll {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-}
-
-/* ========================
-   MOBILE-SPECIFIC OVERRIDES
-   ======================== */
-
-/* Prevent zoom on input focus (iOS) */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-  font-size: 18px !important;
-}
-
-/* Better tap targets on mobile */
-@media (max-width: 768px) {
-  button,
-  .clickable {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Larger spacing for better touch interaction */
-  .space-y-2 > * + * {
-    margin-top: 0.75rem;
-  }
-
-  .space-y-3 > * + * {
-    margin-top: 1rem;
-  }
-
-  /* Mobile-optimized padding */
-  .p-4 {
-    padding: 1.25rem;
-  }
-
-  .px-4 {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  .py-4 {
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-  }
-}
-
-/* ======================================================================
-   PROFESSIONAL UX-ENHANCED CSS FOR MENTORHIT
-   Add these styles to your existing index.css file
-   ====================================================================== */
-
-@layer components {
-  /* ========================
-     ENHANCED ANIMATIONS
-     ======================== */
-
-  /* Smooth fade in animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Enhanced slide in animation */
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateX(-20px) scale(0.95);
+      transform: translateX(-20px);
     }
     to {
       opacity: 1;
-      transform: translateX(0) scale(1);
+      transform: translateX(0);
     }
   }
 
-  /* Pulse glow animation */
-  @keyframes pulseGlow {
-    0%,
-    100% {
-      box-shadow: 0 0 20px rgba(0, 151, 167, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 30px rgba(0, 151, 167, 0.6);
-    }
-  }
-
-  /* Floating animation for decorative elements */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  /* Button press animation */
-  @keyframes buttonPress {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(0.95);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  /* Gradient shift animation */
-  @keyframes gradientShift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  /* Apply animations */
   .animate-fadeIn {
     animation: fadeIn 0.6s ease-out;
   }
@@ -1230,569 +130,123 @@ textarea {
     animation: slideIn 0.4s ease-out;
   }
 
-  .animate-pulseGlow {
-    animation: pulseGlow 2s ease-in-out infinite;
+  /* HIT Color Utilities */
+  .text-hit-primary {
+    color: #0097a7;
   }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  .text-hit-secondary {
+    color: #007377;
   }
-
-  .animate-buttonPress:active {
-    animation: buttonPress 0.1s ease-out;
-  }
-
-  /* ========================
-     ENHANCED GRADIENTS
-     ======================== */
-
-  /* HIT Brand Gradients */
-  .gradient-hit-primary {
-    background: linear-gradient(135deg, #0097a7 0%, #007377 50%, #0097a7 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 4s ease infinite;
-  }
-
-  .gradient-hit-secondary {
-    background: linear-gradient(135deg, #007377 0%, #032f32 50%, #007377 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 4s ease infinite;
-  }
-
-  .gradient-hit-light {
-    background: linear-gradient(135deg, #e8f7f8 0%, #ffffff 50%, #e8f7f8 100%);
-  }
-
-  /* Message bubble gradients */
-  .gradient-user-message {
-    background: linear-gradient(135deg, #032f32 0%, #007377 50%, #032f32 100%);
-    position: relative;
-  }
-
-  .gradient-ai-message {
-    background: linear-gradient(
-      135deg,
-      #ffffff 0%,
-      rgba(232, 247, 248, 0.6) 50%,
-      #ffffff 100%
-    );
-    position: relative;
-  }
-
-  /* ========================
-     ENHANCED TYPOGRAPHY
-     ======================== */
-
-  /* Professional text gradients */
-  .text-gradient-hit {
-    background: linear-gradient(135deg, #032f32 0%, #0097a7 50%, #007377 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: gradientShift 3s ease infinite;
-  }
-
-  /* Enhanced font weights and spacing */
-  .text-professional {
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.4;
-  }
-
-  .text-hero {
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 1.1;
-  }
-
-  /* ========================
-     ENHANCED INTERACTIVE ELEMENTS
-     ======================== */
-
-  /* Professional button styling */
-  .btn-professional {
-    @apply relative overflow-hidden rounded-2xl font-semibold transition-all duration-300;
-    @apply shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95;
-    background: linear-gradient(
-      135deg,
-      var(--hit-primary) 0%,
-      var(--hit-secondary) 100%
-    );
-  }
-
-  .btn-professional::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transition: left 0.5s;
-  }
-
-  .btn-professional:hover::before {
-    left: 100%;
-  }
-
-  /* Enhanced input styling */
-  .input-professional {
-    @apply w-full px-6 py-4 rounded-2xl border-2 transition-all duration-300;
-    @apply bg-white/95 backdrop-blur-sm;
-    border-color: rgba(0, 151, 167, 0.3);
-  }
-
-  .input-professional:focus {
-    border-color: #0097a7;
-    box-shadow: 0 0 0 4px rgba(0, 151, 167, 0.1),
-      0 8px 25px rgba(0, 151, 167, 0.15);
-    outline: none;
-  }
-
-  /* Enhanced card styling */
-  .card-professional {
-    @apply bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-200/60;
-    @apply shadow-sm hover:shadow-xl transition-all duration-300;
-    @apply transform hover:-translate-y-1;
-  }
-
-  .card-professional:hover {
-    border-color: rgba(0, 151, 167, 0.3);
-  }
-
-  /* ========================
-     ENHANCED MESSAGING UI
-     ======================== */
-
-  /* Student message bubble */
-  .message-student {
-    @apply relative overflow-hidden rounded-3xl px-6 py-5;
-    background: linear-gradient(135deg, #032f32 0%, #007377 50%, #032f32 100%);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 25px rgba(3, 47, 50, 0.3);
-  }
-
-  .message-student::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 50%,
-      rgba(0, 151, 167, 0.1) 100%
-    );
-    border-radius: inherit;
-  }
-
-  /* AI/Mentor message bubble */
-  .message-ai {
-    @apply relative overflow-hidden rounded-3xl px-6 py-5;
-    background: linear-gradient(
-      135deg,
-      #ffffff 0%,
-      rgba(232, 247, 248, 0.4) 50%,
-      #ffffff 100%
-    );
+  .text-hit-dark {
     color: #032f32;
-    border: 2px solid rgba(0, 151, 167, 0.2);
-    box-shadow: 0 8px 25px rgba(0, 151, 167, 0.1);
-    backdrop-filter: blur(10px);
+  }
+  .bg-hit-light {
+    background-color: #e8f7f8;
+  }
+  .bg-hit-primary {
+    background-color: #0097a7;
+  }
+  .bg-hit-secondary {
+    background-color: #007377;
+  }
+  .bg-hit-dark {
+    background-color: #032f32;
   }
 
-  .message-ai::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(0, 151, 167, 0.05) 0%,
-      transparent 50%,
-      rgba(0, 115, 119, 0.05) 100%
-    );
-    border-radius: inherit;
+  /* Scrollbar Styling */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 
-  /* ========================
-     ENHANCED AVATARS
-     ======================== */
-
-  .avatar-professional {
-    @apply relative rounded-2xl flex items-center justify-center shadow-xl;
-    @apply border-2 border-white overflow-hidden;
-  }
-
-  .avatar-student {
-    background: linear-gradient(135deg, #007377 0%, #032f32 100%);
-  }
-
-  .avatar-ai {
-    background: linear-gradient(135deg, #0097a7 0%, #007377 50%, #032f32 100%);
-  }
-
-  .avatar-professional::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      transparent 100%
-    );
-    border-radius: inherit;
-  }
-
-  /* ========================
-     ENHANCED NAVIGATION
-     ======================== */
-
-  .nav-professional {
-    @apply bg-white/95 backdrop-blur-xl border-b shadow-lg;
-    border-color: rgba(0, 151, 167, 0.1);
-  }
-
-  .nav-item-professional {
-    @apply px-4 py-3 rounded-xl font-semibold transition-all duration-300;
-    @apply relative overflow-hidden;
-  }
-
-  .nav-item-professional.active {
-    background: linear-gradient(
-      135deg,
-      var(--hit-primary) 0%,
-      var(--hit-secondary) 100%
-    );
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 151, 167, 0.3);
-  }
-
-  .nav-item-professional:not(.active):hover {
-    @apply bg-gray-100 text-gray-900;
-    transform: translateY(-1px);
-  }
-
-  /* ========================
-     ENHANCED LAYOUTS
-     ======================== */
-
-  /* Professional container with subtle patterns */
-  .container-professional {
-    position: relative;
-    background: linear-gradient(
-      135deg,
-      rgba(232, 247, 248, 0.1) 0%,
-      rgba(255, 255, 255, 0.9) 100%
-    );
-  }
-
-  .container-professional::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(
-        circle at 25% 25%,
-        rgba(0, 151, 167, 0.05) 2px,
-        transparent 2px
-      ),
-      radial-gradient(
-        circle at 75% 75%,
-        rgba(0, 115, 119, 0.05) 2px,
-        transparent 2px
-      );
-    background-size: 50px 50px, 30px 30px;
-    pointer-events: none;
-  }
-
-  /* Enhanced mobile menu */
-  .mobile-menu-professional {
-    @apply fixed top-0 left-0 h-full bg-white/95 backdrop-blur-xl;
-    @apply shadow-2xl border-r;
-    border-color: rgba(0, 151, 167, 0.2);
-    width: 320px;
-    max-width: 85vw;
-  }
-
-  /* ========================
-     ENHANCED VISUAL EFFECTS
-     ======================== */
-
-  /* Glassmorphism effect */
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  /* Enhanced shadows */
-  .shadow-professional {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 151, 167, 0.05);
-  }
-
-  .shadow-professional-lg {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 151, 167, 0.1);
-  }
-
-  .shadow-professional-xl {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 151, 167, 0.1);
-  }
-
-  /* ========================
-     ENHANCED SCROLLBARS
-     ======================== */
-
-  .scrollbar-professional {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 151, 167, 0.3) transparent;
-  }
-
-  .scrollbar-professional::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  .scrollbar-professional::-webkit-scrollbar-track {
+  .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 4px;
   }
 
-  .scrollbar-professional::-webkit-scrollbar-thumb {
+  .scrollbar-thin::-webkit-scrollbar-thumb {
     background: rgba(0, 151, 167, 0.3);
-    border-radius: 4px;
+    border-radius: 3px;
     transition: background 0.2s ease;
   }
 
-  .scrollbar-professional::-webkit-scrollbar-thumb:hover {
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 151, 167, 0.5);
   }
 
-  /* ========================
-     ENHANCED LOADING STATES
-     ======================== */
-
-  .loading-professional {
-    @apply relative overflow-hidden rounded-lg;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
   }
 
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
+  .scrollbar-thumb-hit-primary\/20::-webkit-scrollbar-thumb {
+    background: rgba(0, 151, 167, 0.2);
+  }
+}
+
+/* Essential Component Styles */
+@layer components {
+  /* HIT Buttons */
+  .btn-hit-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    min-height: 44px;
   }
 
-  /* ========================
-     ENHANCED RESPONSIVE DESIGN
-     ======================== */
-
-  /* Mobile-first responsive utilities */
-  @media (max-width: 768px) {
-    .container-professional {
-      padding: 1rem;
-    }
-
-    .message-student,
-    .message-ai {
-      @apply px-4 py-4 text-lg;
-    }
-
-    .nav-item-professional {
-      @apply px-6 py-4 text-lg;
-      min-height: 60px;
-    }
-
-    .btn-professional {
-      @apply px-6 py-4 text-lg;
-      min-height: 56px;
-    }
-
-    .input-professional {
-      @apply px-5 py-4 text-lg;
-      min-height: 56px;
-    }
+  .btn-hit-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+    min-height: 44px;
   }
 
-  /* Tablet adjustments */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .container-professional {
-      padding: 1.5rem;
-    }
+  /* Chat Bubbles */
+  .chat-bubble-user {
+    @apply bg-primary text-primary-foreground px-4 py-3 rounded-3xl;
   }
 
-  /* Desktop enhancements */
-  @media (min-width: 1025px) {
-    .container-professional {
-      padding: 2rem;
-    }
-
-    .nav-item-professional:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-professional:hover {
-      transform: translateY(-2px) scale(1.05);
-    }
+  .chat-bubble-ai {
+    @apply bg-card text-card-foreground border border-border px-4 py-3 rounded-3xl;
   }
 
-  /* ========================
-     ENHANCED ACCESSIBILITY
-     ======================== */
-
-  /* Enhanced focus states */
-  .focus-professional:focus-visible {
-    outline: 3px solid rgba(0, 151, 167, 0.6);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 6px rgba(0, 151, 167, 0.2);
+  /* HIT Gradient Background */
+  .hit-gradient {
+    background: linear-gradient(135deg, #e8f7f8 0%, #b8e6e8 50%, #7dd3da 100%);
   }
 
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    .message-student {
-      background: #000000;
-      border: 3px solid #ffffff;
-      color: #ffffff;
-    }
-
-    .message-ai {
-      background: #ffffff;
-      border: 3px solid #000000;
-      color: #000000;
-    }
-
-    .nav-item-professional.active {
-      background: #000000;
-      color: #ffffff;
-    }
+  /* Glass Effect */
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-
-    .gradient-hit-primary,
-    .gradient-hit-secondary,
-    .text-gradient-hit {
-      animation: none;
-    }
-  }
-
-  /* ========================
-     ENHANCED UTILITIES
-     ======================== */
-
-  /* Professional spacing scale */
-  .space-professional-xs {
-    gap: 0.5rem;
-  }
-  .space-professional-sm {
-    gap: 0.75rem;
-  }
-  .space-professional-md {
-    gap: 1rem;
-  }
-  .space-professional-lg {
-    gap: 1.5rem;
-  }
-  .space-professional-xl {
-    gap: 2rem;
-  }
-
-  /* Professional border radius scale */
-  .rounded-professional-sm {
-    border-radius: 0.5rem;
-  }
-  .rounded-professional-md {
-    border-radius: 0.75rem;
-  }
-  .rounded-professional-lg {
-    border-radius: 1rem;
-  }
-  .rounded-professional-xl {
-    border-radius: 1.5rem;
-  }
-  .rounded-professional-2xl {
-    border-radius: 2rem;
-  }
-
-  /* Touch-friendly sizing */
-  .touch-professional {
+  /* Touch Targets for Mobile */
+  .touch-target {
     min-height: 44px;
     min-width: 44px;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .touch-professional-lg {
-    min-height: 56px;
-    min-width: 56px;
+  /* Sidebar Styling */
+  .sidebar-item {
+    @apply text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+    @apply px-4 py-3 rounded-xl transition-all duration-200;
+    min-height: 48px;
+  }
+
+  .sidebar-item-active {
+    @apply bg-sidebar-primary text-sidebar-primary-foreground;
   }
 }
 
-/* ========================
-   GLOBAL ENHANCEMENTS
-   ======================== */
+/* Mobile Optimizations */
+@media screen and (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+    position: relative;
+  }
 
-/* Smooth scrolling for better UX */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Prevent horizontal overflow */
-body {
-  overflow-x: hidden;
-}
-
-/* Enhanced text rendering */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Better tap targets on mobile */
-@media (max-width: 768px) {
-  button,
-  .clickable,
+  /* Prevent iOS zoom on input focus */
   input,
-  textarea {
-    min-height: 44px;
+  textarea,
+  select {
+    font-size: 16px;
   }
-}
-
-/* Performance optimizations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
 }

@@ -116,7 +116,7 @@ const ChatInterface = () => {
 
       {/* Chat Messages Area - Enhanced UX Design */}
       <div className="flex-1 overflow-hidden relative z-10">
-        <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent bg-gradient-to-b from-hit-light/15 to-hit-light/5">
+        <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent">
           {/* Messages container with professional spacing */}
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 min-h-full">
             {/* Enhanced Welcome State - ORIGINAL HEBREW TEXT */}
@@ -239,13 +239,13 @@ const ChatInterface = () => {
       {/* Enhanced Input Area - Professional Design */}
       <div className="relative z-10">
         {/* Input container with enhanced styling */}
-        <div className="bg-white/95 backdrop-blur-xl border-t border-hit-primary/20 shadow-2xl">
+        <div className="bg-gradient-to-t from-hit-light/80 to-white/90 backdrop-blur-xl border-t border-hit-primary/30 shadow-2xl">
           <div className="max-w-4xl mx-auto p-4 sm:p-6">
             {/* Enhanced input form */}
             <form onSubmit={handleSubmit} className="relative">
               <div
                 className={`
-                relative bg-white rounded-3xl border-2 transition-all duration-300 shadow-lg overflow-hidden
+                relative bg-gradient-to-r from-white to-hit-light/20 rounded-3xl border-2 transition-all duration-300 shadow-lg overflow-hidden
                 ${
                   isInputFocused
                     ? "border-hit-primary shadow-hit-primary/20"
