@@ -29,7 +29,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "שלום, אני MentorHIT!\n\nהיועץ האקדמי הדיגיטלי שלך ממכון הטכנולוגי חולון. אני כאן כדי לעזור לך בתכנון קורסים, הכוונה מקצועית והחלטות אקדמיות :)\n\nכדאי למלא את שאלון ההעדפות לפני שנתחיל שיחה.\n\nאיך אוכל לעזור לך היום?",
+      text: "היי נוי, איך אפשר לעזור? ✨",
       sender: "ai",
       timestamp: new Date(),
     },
