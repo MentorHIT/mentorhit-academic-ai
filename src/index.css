@@ -1,3 +1,121 @@
+/* ===== CRITICAL: FIX DOUBLE SCROLLING ON MOBILE ===== */
+
+/* Step 1: Lock the viewport - NO scrolling on html/body */
+html,
+body {
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Step 2: Make the React root take full height */
+#root {
+  height: 100dvh;
+  max-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Step 3: Dashboard container must be exactly viewport height */
+.dashboard-container {
+  height: 100dvh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+/* Step 4: Main content area (where ChatInterface lives) */
+.dashboard-main-content {
+  flex: 1;
+  height: 100%;
+  overflow: hidden; /* Prevents scrolling here */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Step 5: Chat interface container */
+.chat-interface-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Step 6: Chat messages area - ONLY THIS SHOULD SCROLL */
+.chat-messages-scroll-area {
+  flex: 1;
+  overflow-y: auto; /* Only vertical scroll */
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scroll-behavior: smooth;
+}
+
+/* Step 7: Chat input area - fixed at bottom */
+.chat-input-wrapper {
+  flex-shrink: 0; /* Never shrinks */
+  position: relative;
+  z-index: 10;
+  background: white;
+  border-top: 1px solid rgba(0, 115, 119, 0.2);
+}
+
+/* Mobile-specific fixes */
+@media screen and (max-width: 768px) {
+  /* Extra insurance against page scrolling */
+  html,
+  body {
+    position: static !important;
+    overflow-x: hidden; /* Only prevent horizontal scroll */
+    overflow-y: auto; /* Allow vertical scroll if needed by system */
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Re-enable touch for the scrollable area only */
+  .chat-messages-scroll-area {
+    touch-action: pan-y; /* Allow vertical scrolling only here */
+  }
+
+  /* Fix for iOS Safari viewport issues */
+  .dashboard-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* Prevent bounce scrolling on iOS everywhere except messages */
+  * {
+    -webkit-overflow-scrolling: auto;
+  }
+
+  .chat-messages-scroll-area {
+    -webkit-overflow-scrolling: touch; /* Smooth scroll only here */
+  }
+}
+
+/* Optional: Visual debugging - remove after testing */
+/* Uncomment these to see the layout boundaries
+.dashboard-container {
+  border: 3px solid red;
+}
+
+.chat-interface-wrapper {
+  border: 3px solid blue;
+}
+
+.chat-messages-scroll-area {
+  border: 3px solid green;
+}
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

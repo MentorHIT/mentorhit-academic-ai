@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "lucide-react";
+import { User, Brain } from "lucide-react";
 
 interface Message {
   id: string;
@@ -114,16 +114,36 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
       {/* AI Avatar - Only for AI messages, very minimal */}
       {!isUser && (
         <div className="flex-shrink-0 mr-4 mt-1">
-          <div className="h-8 w-8 bg-hit-primary rounded-full flex items-center justify-center shadow-sm">
-            <img
-              src="/logo-white-bg.png"
-              className="h-5 w-5 rounded"
-              alt="MentorHIT"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-              }}
-            />
+          <div className="h-8 w-8 bg-hit-primary rounded-full flex items-center justify-center shadow-sm overflow-hidden">
+            {/* Try multiple logo sources with better fallback */}
+            <picture>
+              {/* Try logo-white-bg.png first */}
+              <source srcSet="/logo-white-bg.png" />
+              {/* Fallback to logo-white.png */}
+              <source srcSet="/logo-white.png" />
+              {/* Fallback to logo.png */}
+              <source srcSet="/logo.png" />
+              <img
+                src="/logo-white-bg.png"
+                className="h-6 w-6 object-contain"
+                alt="MentorHIT"
+                onError={(e) => {
+                  // Instead of hiding, replace with fallback icon
+                  const imgElement = e.target as HTMLImageElement;
+                  imgElement.style.display = "none";
+                  const parentDiv = imgElement.parentElement?.parentElement;
+                  if (parentDiv) {
+                    // Create fallback element
+                    const fallback = document.createElement("div");
+                    fallback.innerHTML =
+                      '<svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>';
+                    parentDiv.appendChild(fallback.firstChild!);
+                  }
+                }}
+              />
+            </picture>
+            {/* This Brain icon will show if the image completely fails */}
+            <Brain className="h-5 w-5 text-white hidden only:block" />
           </div>
         </div>
       )}
@@ -174,13 +194,13 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
             {jobData && jobData.jobs && (
               <div className="mt-6">
                 <h4 className="font-semibold text-hit-dark mb-4 text-right">
-                  משרות מומלצות ({4})
+                  משרות מומלצות ({jobData.jobs.length})
                 </h4>
                 <div className="grid gap-4">
                   {jobData.jobs
                     .sort(
                       (a, b) => (b.match_score || 0.8) - (a.match_score || 0.8)
-                    ) // Sort by best match score first
+                    )
                     .slice(0, 4)
                     .map((job, index) => (
                       <a
@@ -243,45 +263,28 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
                             {/* Skills */}
                             <div className="flex flex-wrap gap-1 justify-end mb-3">
                               {(() => {
-                                // Handle skills safely
                                 const skills = Array.isArray(job.skills)
                                   ? job.skills
                                   : typeof job.skills === "string"
-                                  ? job.skills
-                                      .split(",")
-                                      .map((s) => s.trim())
-                                      .filter((s) => s)
-                                  : ["מיומנויות לא זמינות"];
+                                  ? job.skills.split(",").map((s) => s.trim())
+                                  : [];
 
-                                return skills
-                                  .slice(0, 4)
-                                  .map((skill, skillIndex) => (
-                                    <span
-                                      key={skillIndex}
-                                      className="bg-hit-light text-hit-dark px-2 py-1 rounded-full text-xs group-hover:bg-hit-primary/20 transition-colors"
-                                    >
-                                      {skill}
-                                    </span>
-                                  ));
+                                return skills.slice(0, 3).map((skill, i) => (
+                                  <span
+                                    key={i}
+                                    className="bg-hit-light/50 text-hit-secondary px-2 py-1 rounded-full text-xs group-hover:bg-hit-primary/10 transition-colors"
+                                  >
+                                    {skill}
+                                  </span>
+                                ));
                               })()}
                             </div>
 
-                            {/* Click Indicator */}
-                            <div className="flex items-center justify-end text-sm text-hit-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                              <span>לחץ לצפייה במשרה</span>
-                              <svg
-                                className="w-4 h-4 mr-1"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
+                            {/* View Button */}
+                            <div className="text-left">
+                              <span className="text-hit-primary font-semibold text-sm group-hover:text-hit-secondary transition-colors">
+                                צפה במשרה ←
+                              </span>
                             </div>
                           </div>
                         </div>

@@ -100,7 +100,7 @@ const ChatInterface = () => {
   ];
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-hit-light/10 via-white to-gray-50/30 relative overflow-hidden">
+    <div className="chat-interface-wrapper bg-gradient-to-br from-hit-light/10 via-white to-gray-50/30 relative">
       {/* Background pattern for visual depth */}
       <div className="absolute inset-0 opacity-[0.02]">
         <div
@@ -115,8 +115,8 @@ const ChatInterface = () => {
       </div>
 
       {/* Chat Messages Area - Enhanced UX Design */}
-      <div className="flex-1 overflow-hidden relative z-10">
-        <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent">
+      <div className="chat-messages-scroll-area relative z-10">
+        <div className="h-full">
           {/* Messages container with professional spacing */}
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 min-h-full">
             {/* Enhanced Welcome State - ORIGINAL HEBREW TEXT */}
@@ -207,12 +207,35 @@ const ChatInterface = () => {
             {isTyping && (
               <div className="flex items-start justify-start group animate-slideIn">
                 <div className="flex-shrink-0 mr-4 mt-1">
-                  <div className="h-8 w-8 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-full flex items-center justify-center shadow-sm relative">
-                    <img
-                      src="/logo-white-bg.png"
-                      className="h-5 w-5 rounded z-10"
-                      alt="MentorHIT"
-                    />
+                  <div className="h-8 w-8 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-full flex items-center justify-center shadow-sm relative overflow-hidden">
+                    {/* Fixed logo with multiple sources and better fallback */}
+                    <picture className="z-10">
+                      <source srcSet="/logo-white-bg.png" />
+                      <source srcSet="/logo-white.png" />
+                      <source srcSet="/logo.png" />
+                      <img
+                        src="/logo-white-bg.png"
+                        className="h-5 w-5 object-contain"
+                        alt="MentorHIT"
+                        onError={(e) => {
+                          const imgElement = e.target as HTMLImageElement;
+                          // Replace with text fallback instead of hiding
+                          const parent =
+                            imgElement.parentElement?.parentElement;
+                          if (parent) {
+                            imgElement.style.display = "none";
+                            // Add text fallback if not already present
+                            if (!parent.querySelector(".logo-fallback")) {
+                              const fallback = document.createElement("span");
+                              fallback.className =
+                                "logo-fallback text-white font-bold text-xs";
+                              fallback.textContent = "M";
+                              parent.appendChild(fallback);
+                            }
+                          }
+                        }}
+                      />
+                    </picture>
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
                   </div>
                 </div>
@@ -237,7 +260,7 @@ const ChatInterface = () => {
       </div>
 
       {/* Enhanced Input Area - Professional Design */}
-      <div className="relative z-10">
+      <div className="chat-input-wrapper">
         {/* Input container with enhanced styling */}
         <div className="bg-gradient-to-t from-hit-light/80 to-white/90 backdrop-blur-xl border-t border-hit-primary/30 shadow-2xl">
           <div className="max-w-4xl mx-auto p-4 sm:p-6">

@@ -251,103 +251,114 @@ const Dashboard = () => {
       </header>
 
       {/* ✅ FIXED Mobile Navigation Overlay */}
+      {/* ✅ FIXED Mobile Navigation Overlay with proper z-index stacking */}
       {isMobileMenuOpen && (
         <>
-          {/* Backdrop with improved click handling */}
+          {/* Backdrop with highest z-index for mobile */}
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] lg:hidden"
             onClick={handleBackdropClick}
           />
 
-          {/* Mobile Menu with event isolation */}
+          {/* Mobile Menu with proper positioning and z-index */}
           <div
-            className="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-hit-light/90 to-hit-light/70 backdrop-blur-xl shadow-2xl z-50 lg:hidden border-r border-hit-primary/20"
-            onClick={(e) => e.stopPropagation()} // ✅ PREVENT CLICKS FROM BUBBLING TO BACKDROP
+            className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-gradient-to-b from-hit-light/95 to-hit-light/85 backdrop-blur-xl shadow-2xl z-[70] lg:hidden border-r border-hit-primary/20 transform transition-transform duration-300 ease-out"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              transform: isMobileMenuOpen
+                ? "translateX(0)"
+                : "translateX(-100%)",
+            }}
           >
-            <nav className="h-full flex flex-col p-6">
-              {/* Close button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="self-end p-2 text-hit-secondary hover:text-hit-primary rounded-lg transition-colors mb-6"
-              >
-                <X className="h-6 w-6" />
-              </button>
+            <nav className="h-full flex flex-col p-4 sm:p-6 overflow-y-auto">
+              {/* Close button with proper spacing */}
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 text-hit-secondary hover:text-hit-primary rounded-lg transition-colors bg-white/20 hover:bg-white/30"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
 
-              {/* Logo */}
-              <div className="flex items-center space-x-3 mb-8 pb-6 border-b border-hit-primary/20">
-                <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-xl flex items-center justify-center">
+              {/* Logo section with better spacing */}
+              <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-hit-primary/20">
+                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-xl flex items-center justify-center flex-shrink-0">
                   <img
                     src="/logo-white-bg.png"
-                    className="h-8 w-8 rounded-lg"
+                    className="h-6 w-6 sm:h-8 sm:w-8 rounded-lg"
                     alt="MentorHIT"
                   />
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-hit-dark">MentorHIT</h3>
-                  <p className="text-sm text-hit-secondary">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-lg sm:text-xl font-bold text-hit-dark truncate">
+                    MentorHIT
+                  </h3>
+                  <p className="text-xs sm:text-sm text-hit-secondary truncate">
                     AI Academic Advisor
                   </p>
                 </div>
               </div>
 
-              {/* ✅ FIXED Main menu items with proper event handling */}
-              <div className="space-y-2 mb-6">
+              {/* ✅ FIXED Main menu items with proper spacing */}
+              <div className="space-y-1 mb-6 flex-1">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
-                    onClick={(e) => handleMenuItemClick(e, item.id)} // ✅ PASS EVENT TO PREVENT BUBBLING
+                    onClick={(e) => handleMenuItemClick(e, item.id)}
                     className={`
-                      relative w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-left transition-all duration-200 touch-manipulation overflow-hidden
-                      ${
-                        activePage === item.id
-                          ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg"
-                          : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50"
-                      }
-                    `}
-                    style={{ minHeight: "56px" }}
+                relative w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 touch-manipulation overflow-hidden group
+                ${
+                  activePage === item.id
+                    ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg scale-[1.02]"
+                    : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/60 hover:scale-[1.01]"
+                }
+              `}
+                    style={{ minHeight: "52px" }}
                   >
-                    <item.icon className="h-6 w-6 relative z-10" />
-                    <span className="text-lg flex-1 relative z-10">
+                    <item.icon className="h-5 w-5 sm:h-6 sm:w-6 relative z-10 flex-shrink-0" />
+                    <span className="text-base sm:text-lg flex-1 relative z-10 truncate font-medium">
                       {item.label}
                     </span>
                     {item.badge && (
                       <span
                         className={`
-                        px-2 py-1 rounded-full text-sm font-semibold relative z-10
-                        ${
-                          activePage === item.id
-                            ? "bg-white/20 text-white"
-                            : "bg-hit-primary text-white"
-                        }
-                      `}
+                    px-2 py-1 rounded-full text-xs sm:text-sm font-semibold relative z-10 flex-shrink-0
+                    ${
+                      activePage === item.id
+                        ? "bg-white/20 text-white"
+                        : "bg-hit-primary text-white"
+                    }
+                  `}
                       >
                         {item.badge}
                       </span>
                     )}
-                    {/* ✅ FIXED: Added pointer-events-none to prevent click blocking */}
-                    {activePage === item.id && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-2xl pointer-events-none" />
-                    )}
+                    {/* Subtle hover effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                   </button>
                 ))}
               </div>
 
-              <div className="border-t border-hit-primary/20 pt-6 mt-6">
-                <p className="text-xs font-bold text-hit-secondary uppercase tracking-wider mb-3 px-2">
+              {/* Secondary items with proper sections */}
+              <div className="border-t border-hit-primary/20 pt-4 mt-4">
+                <p className="text-xs font-bold text-hit-secondary/80 uppercase tracking-wider mb-3 px-2">
                   More Tools
                 </p>
-                <div className="space-y-2">
+                <div className="space-y-1 mb-6">
                   {secondaryItems.map((item) => (
                     <button
                       key={item.id}
                       onClick={(e) => handleMenuItemClick(e, item.id)}
-                      className="w-full flex items-center space-x-4 px-5 py-3 rounded-xl text-left text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50 transition-all duration-200 touch-manipulation"
-                      style={{ minHeight: "52px" }}
+                      className="w-full flex items-center space-x-3 px-4 py-2.5 rounded-lg text-left text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50 transition-all duration-200 touch-manipulation group"
+                      style={{ minHeight: "48px" }}
                     >
-                      <item.icon className="h-5 w-5" />
-                      <span className="text-base flex-1">{item.label}</span>
+                      <item.icon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                      <span className="text-sm sm:text-base flex-1 truncate">
+                        {item.label}
+                      </span>
                       {item.badge && (
-                        <span className="px-2 py-1 bg-hit-primary text-white rounded-full text-sm font-semibold">
+                        <span className="px-2 py-1 bg-hit-primary text-white rounded-full text-xs font-semibold flex-shrink-0">
                           {item.badge}
                         </span>
                       )}
@@ -356,14 +367,14 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Mobile Logout */}
-              <div className="border-t border-red-200 pt-6 mt-6">
+              {/* Mobile Logout at bottom */}
+              <div className="border-t border-red-200/50 pt-4 mt-auto">
                 <button
                   onClick={logout}
-                  className="w-full flex items-center space-x-4 px-5 py-3 rounded-xl text-left text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-200 touch-manipulation"
-                  style={{ minHeight: "52px" }}
+                  className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-red-600 hover:text-red-700 hover:bg-red-50/50 transition-all duration-200 touch-manipulation group"
+                  style={{ minHeight: "50px" }}
                 >
-                  <LogOut className="h-5 w-5" />
+                  <LogOut className="h-5 w-5 flex-shrink-0" />
                   <span className="text-base font-semibold">Sign Out</span>
                 </button>
               </div>
