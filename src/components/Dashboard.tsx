@@ -156,10 +156,10 @@ const Dashboard = () => {
               {/* Enhanced MentorHIT Logo + Brand */}
               <div className="flex items-center space-x-4">
                 <div className="relative">
-                  <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
+                  <div className="h-12 w-12 rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
                     <img
                       src="/logo-white-bg.png"
-                      className="h-7 w-7 rounded-xl z-10"
+                      className="h-10 w-10 rounded-xl z-10"
                       alt="MentorHIT"
                     />
                     {/* Animated glow effect */}
@@ -250,7 +250,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* ✅ FIXED Mobile Navigation Overlay */}
       {/* ✅ FIXED Mobile Navigation Overlay with proper z-index stacking */}
       {isMobileMenuOpen && (
         <>

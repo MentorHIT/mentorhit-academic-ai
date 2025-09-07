@@ -114,7 +114,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
       {/* AI Avatar - Only for AI messages, very minimal */}
       {!isUser && (
         <div className="flex-shrink-0 mr-4 mt-1">
-          <div className="h-8 w-8 bg-hit-primary rounded-full flex items-center justify-center shadow-sm overflow-hidden">
+          <div className="h-8 w-8 rounded-full flex items-center justify-center shadow-sm overflow-hidden">
             {/* Try multiple logo sources with better fallback */}
             <picture>
               {/* Try logo-white-bg.png first */}
@@ -125,7 +125,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
               <source srcSet="/logo.png" />
               <img
                 src="/logo-white-bg.png"
-                className="h-6 w-6 object-contain"
+                className="h-6 w-6 rounded-xl"
                 alt="MentorHIT"
                 onError={(e) => {
                   // Instead of hiding, replace with fallback icon
@@ -194,7 +194,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, jobData }) => {
             {jobData && jobData.jobs && (
               <div className="mt-6">
                 <h4 className="font-semibold text-hit-dark mb-4 text-right">
-                  משרות מומלצות ({jobData.jobs.length})
+                  משרות מומלצות ({4})
                 </h4>
                 <div className="grid gap-4">
                   {jobData.jobs
