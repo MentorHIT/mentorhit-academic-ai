@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect } from 'react';
-import LoginForm from '../components/auth/LoginForm';
-import Dashboard from '../components/Dashboard';
-import { AuthProvider, useAuth } from '../context/AuthContext';
-import { ChatProvider } from '../context/ChatContext';
+import React, { useState, useEffect } from "react";
+import LoginForm from "../components/auth/LoginForm";
+import Dashboard from "../components/Dashboard";
+import { AuthProvider, useAuth } from "../context/AuthContext";
+import { ChatProvider } from "../context/ChatContext";
 
 const Index = () => {
   return (

@@ -1,4 +1,5 @@
-// src/components/chat/ChatInterface.tsx
+// src/components/chat/ChatInterface.tsx - CORRECTED JSX VERSION
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Send,
@@ -111,14 +112,14 @@ const ChatInterface = () => {
             ).getPropertyValue("--hit-primary")} 2px, transparent 2px)`,
             backgroundSize: "50px 50px",
           }}
-        ></div>
+        />
       </div>
 
       {/* Chat Messages Area - Enhanced UX Design */}
       <div className="flex-1 overflow-hidden relative z-10">
         <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-hit-primary/20 scrollbar-track-transparent">
-          {/* Messages container with professional spacing */}
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 min-h-full">
+          {/* ✅ SCROLLING FIX: Removed min-h-full from this container */}
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
             {/* Enhanced Welcome State - ORIGINAL HEBREW TEXT */}
             {messages.length === 0 && (
               <div className="text-center py-12 sm:py-16 px-6 animate-fadeIn">
@@ -131,56 +132,56 @@ const ChatInterface = () => {
                       alt="MentorHIT"
                     />
                     {/* Animated glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-3xl"></div>
-                    <div className="absolute -inset-1 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-3xl blur-xl opacity-50 animate-pulse"></div>
-                  </div>
-
-                  {/* Floating sparkles */}
-                  <div className="absolute top-2 right-1/3 animate-bounce delay-100">
-                    <Sparkles className="h-4 w-4 text-hit-primary/60" />
-                  </div>
-                  <div className="absolute bottom-2 left-1/3 animate-bounce delay-300">
-                    <Sparkles className="h-3 w-3 text-hit-secondary/60" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent rounded-3xl animate-pulse" />
                   </div>
                 </div>
 
-                {/* Enhanced welcome text - Keep original Hebrew welcome */}
-                <div className="mb-8">
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-hit-dark via-hit-primary to-hit-secondary bg-clip-text text-transparent mb-4 leading-tight">
-                    ברוכים הבאים ל-MentorHIT
+                {/* Enhanced Welcome Message */}
+                <div className="mb-10 sm:mb-12">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-hit-dark mb-4 leading-tight">
+                    שלום! אני מנטור
+                    <span className="bg-gradient-to-r from-hit-primary to-hit-secondary bg-clip-text text-transparent">
+                      HIT
+                    </span>
                   </h2>
-                  <p className="text-hit-secondary text-xl sm:text-2xl leading-relaxed max-w-2xl mx-auto font-medium">
-                    היועץ האקדמי הדיגיטלי שלכם
+                  <p className="text-lg sm:text-xl text-hit-secondary max-w-2xl mx-auto leading-relaxed">
+                    הייעוץ האקדמי החכם שלכם במכון הטכנולוגי חולון
                   </p>
-                  <p className="text-hit-secondary/80 text-lg mt-3 max-w-lg mx-auto">
-                    קבלו ייעוץ מותאם אישית, המלצות על קורסים ותכנון קריירה חכם
-                  </p>
+                  <div className="mt-6 text-base text-hit-secondary/80 max-w-lg mx-auto">
+                    אני כאן כדי לעזור לכם לתכנן את הלימודים, לבחור קורסים ולהכין
+                    אתכם לקריירה בהיי-טק 🚀
+                  </div>
                 </div>
 
-                {/* Quick start buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto mb-8">
-                  {quickPrompts.map((prompt, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSuggestedPrompt(prompt)}
-                      className="group p-4 bg-white/80 hover:bg-white border-2 border-hit-primary/20 hover:border-hit-primary/40 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 text-right backdrop-blur-sm transform hover:-translate-y-1"
-                    >
-                      <p className="text-base font-semibold text-hit-dark group-hover:text-hit-primary transition-colors">
-                        {prompt}
-                      </p>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Enhanced CTA - HIT Colors */}
-                <div className="bg-gradient-to-r from-hit-light/70 to-hit-light/50 backdrop-blur-sm rounded-2xl p-6 border border-hit-primary/30 max-w-md mx-auto">
-                  <p className="text-hit-secondary text-base mb-4">
-                    או הקלידו שאלה בתיבה למטה
+                {/* Enhanced Suggested Prompts */}
+                <div className="max-w-3xl mx-auto mb-8">
+                  <p className="text-hit-secondary text-lg mb-6 font-medium">
+                    💡 נושאים פופולריים שאתם יכולים לשאול עליהם:
                   </p>
-                  <div className="flex items-center justify-center space-x-2 text-hit-primary/60">
-                    <div className="h-2 w-2 bg-hit-primary rounded-full animate-bounce"></div>
-                    <div className="h-2 w-2 bg-hit-secondary rounded-full animate-bounce delay-100"></div>
-                    <div className="h-2 w-2 bg-hit-dark rounded-full animate-bounce delay-200"></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    {quickPrompts.map((prompt, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSuggestedPrompt(prompt)}
+                        className="group p-4 bg-white/80 hover:bg-white border-2 border-hit-primary/20 hover:border-hit-primary/40 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 text-right backdrop-blur-sm transform hover:-translate-y-1"
+                      >
+                        <p className="text-base font-semibold text-hit-dark group-hover:text-hit-primary transition-colors">
+                          {prompt}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Enhanced CTA - HIT Colors */}
+                  <div className="bg-gradient-to-r from-hit-light/70 to-hit-light/50 backdrop-blur-sm rounded-2xl p-6 border border-hit-primary/30 max-w-md mx-auto">
+                    <p className="text-hit-secondary text-base mb-4">
+                      או הקלידו שאלה בתיבה למטה
+                    </p>
+                    <div className="flex items-center justify-center space-x-2 text-hit-primary/60">
+                      <div className="h-2 w-2 bg-hit-primary rounded-full animate-bounce" />
+                      <div className="h-2 w-2 bg-hit-secondary rounded-full animate-bounce delay-100" />
+                      <div className="h-2 w-2 bg-hit-dark rounded-full animate-bounce delay-200" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -205,96 +206,87 @@ const ChatInterface = () => {
 
             {/* Enhanced Typing Indicator */}
             {isTyping && (
-              <div className="flex items-start justify-start group animate-slideIn">
-                <div className="flex-shrink-0 mr-4 mt-1">
-                  <div className="h-8 w-8 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-full flex items-center justify-center shadow-sm relative">
+              <div className="flex justify-start mb-6 animate-slideIn">
+                <div className="flex items-center space-x-4">
+                  <div className="h-8 w-8 bg-hit-primary rounded-full flex items-center justify-center shadow-sm">
                     <img
                       src="/logo-white-bg.png"
-                      className="h-5 w-5 rounded z-10"
+                      className="h-5 w-5 rounded"
                       alt="MentorHIT"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
                   </div>
-                </div>
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-6 py-4 border border-hit-secondary/20 shadow-md">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex space-x-1">
-                      <div className="w-3 h-3 bg-hit-secondary rounded-full animate-bounce"></div>
-                      <div className="w-3 h-3 bg-hit-secondary rounded-full animate-bounce delay-100"></div>
-                      <div className="w-3 h-3 bg-hit-secondary rounded-full animate-bounce delay-200"></div>
+                  <div className="bg-gray-100 rounded-2xl px-5 py-4 shadow-sm">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex space-x-1">
+                        <div className="h-2 w-2 bg-hit-primary rounded-full animate-bounce" />
+                        <div className="h-2 w-2 bg-hit-secondary rounded-full animate-bounce delay-100" />
+                        <div className="h-2 w-2 bg-hit-dark rounded-full animate-bounce delay-200" />
+                      </div>
+                      <span className="text-sm text-hit-secondary">
+                        מנטורHIT כותב...
+                      </span>
                     </div>
-                    <span className="text-lg font-semibold text-hit-secondary">
-                      MentorHIT חושב...
-                    </span>
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Scroll anchor */}
             <div ref={messagesEndRef} />
           </div>
         </div>
       </div>
 
-      {/* Enhanced Input Area - Professional Design */}
-      <div className="relative z-10">
-        {/* Input container with enhanced styling */}
-        <div className="bg-gradient-to-t from-hit-light/80 to-white/90 backdrop-blur-xl border-t border-hit-primary/30 shadow-2xl">
-          <div className="max-w-4xl mx-auto p-4 sm:p-6">
-            {/* Enhanced input form */}
+      {/* Enhanced Input Area */}
+      <div className="border-t border-hit-primary/20 bg-gradient-to-r from-white/95 to-hit-light/30 backdrop-blur-xl relative z-20">
+        <div className="max-w-4xl mx-auto p-4 sm:p-6">
+          <div className="relative">
             <form onSubmit={handleSubmit} className="relative">
               <div
                 className={`
-                relative bg-gradient-to-r from-white to-hit-light/20 rounded-3xl border-2 transition-all duration-300 shadow-lg overflow-hidden
-                ${
-                  isInputFocused
-                    ? "border-hit-primary shadow-hit-primary/20"
-                    : "border-hit-secondary/30 hover:border-hit-primary/50"
-                }
-              `}
+                  relative overflow-hidden rounded-3xl border-2 transition-all duration-300 backdrop-blur-sm
+                  ${
+                    isInputFocused
+                      ? "border-hit-primary/50 shadow-xl shadow-hit-primary/10"
+                      : "border-hit-primary/30 shadow-lg"
+                  }
+                `}
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(232,247,248,0.8) 100%)",
+                }}
               >
-                {/* Enhanced textarea */}
-                <textarea
-                  ref={textareaRef}
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  onKeyDown={handleKeyPress}
-                  onFocus={() => setIsInputFocused(true)}
-                  onBlur={() => setIsInputFocused(false)}
-                  placeholder="כתבו את השאלה שלכם כאן..."
-                  rows={1}
-                  className="w-full px-6 py-5 pr-20 bg-transparent border-none outline-none resize-none text-lg placeholder:text-hit-secondary/50 leading-relaxed"
-                  style={{
-                    maxHeight: "160px",
-                    minHeight: "64px",
-                    direction: "rtl",
-                    textAlign: "right",
-                  }}
-                />
+                <div className="flex items-end space-x-4 p-4">
+                  {/* Enhanced Textarea */}
+                  <div className="flex-1 relative">
+                    <textarea
+                      ref={textareaRef}
+                      value={inputValue}
+                      onChange={handleInputChange}
+                      onKeyPress={handleKeyPress}
+                      onFocus={() => setIsInputFocused(true)}
+                      onBlur={() => setIsInputFocused(false)}
+                      placeholder="שאלו אותי כל שאלה אקדמית..."
+                      className="w-full resize-none bg-transparent border-none outline-none text-base text-hit-dark placeholder-hit-secondary/70 leading-relaxed"
+                      style={{
+                        minHeight: "24px",
+                        maxHeight: "160px",
+                        direction: containsHebrew(inputValue) ? "rtl" : "ltr",
+                        textAlign: containsHebrew(inputValue)
+                          ? "right"
+                          : "left",
+                      }}
+                      rows={1}
+                      maxLength={2000}
+                    />
+                  </div>
 
-                {/* Enhanced action buttons */}
-                <div className="absolute right-2 bottom-3 flex items-center space-x-2">
-                  {/* Additional action buttons for future features */}
-                  <button
-                    type="button"
-                    className="p-3 text-hit-secondary/50 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
-                  >
-                    <Paperclip className="h-5 w-5" />
-                  </button>
-
-                  <button
-                    type="button"
-                    className="p-3 text-hit-secondary/50 hover:text-hit-primary rounded-xl hover:bg-hit-light/30 transition-all duration-200 opacity-0 group-hover:opacity-100"
-                  >
-                    <Mic className="h-5 w-5" />
-                  </button>
-
-                  {/* Enhanced send button */}
+                  {/* Enhanced Send Button */}
                   <button
                     type="submit"
                     disabled={!inputValue.trim() || isTyping}
                     className={`
-                      relative group rounded-2xl transition-all duration-300 transform overflow-hidden
+                      group relative rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform active:scale-95 border-0 outline-none
                       ${
                         inputValue.trim() && !isTyping
                           ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white hover:shadow-xl hover:scale-105 active:scale-95"
@@ -314,7 +306,7 @@ const ChatInterface = () => {
                         <ArrowUp className="h-6 w-6 group-hover:scale-110 transition-transform" />
                         {/* Button glow effect */}
                         {inputValue.trim() && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl"></div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl" />
                         )}
                       </>
                     )}
@@ -323,7 +315,7 @@ const ChatInterface = () => {
 
                 {/* Focus glow effect */}
                 {isInputFocused && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-hit-primary/5 to-hit-secondary/5 rounded-3xl pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-hit-primary/5 to-hit-secondary/5 rounded-3xl pointer-events-none" />
                 )}
               </div>
             </form>
@@ -331,7 +323,7 @@ const ChatInterface = () => {
             {/* Enhanced footer with status */}
             <div className="flex items-center justify-between mt-4 px-2">
               <div className="flex items-center space-x-2 text-sm text-hit-secondary/70">
-                <div className="h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="h-2 w-2 bg-green-400 rounded-full animate-pulse" />
                 <span>AI Assistant Online</span>
               </div>
 

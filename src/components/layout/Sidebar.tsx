@@ -1,3 +1,5 @@
+// Updated Sidebar.tsx with fixed button functionality and mobile optimization
+
 import React, { useState, useEffect } from "react";
 import {
   MessageSquare,
@@ -33,6 +35,7 @@ interface MenuItem {
   description: string;
   badge?: string;
   isNew?: boolean;
+  isClickable?: boolean; // New property to control clickability
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -44,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logout } = useAuth();
 
-  // Menu items with enhanced metadata
+  // Fixed menu items with proper click handling
   const menuItems: MenuItem[] = [
     {
       id: "chat",
@@ -52,12 +55,14 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: MessageSquare,
       description: "AI-powered academic guidance",
       badge: "AI",
+      isClickable: true,
     },
     {
       id: "preferences",
       label: "Preferences",
       icon: Target,
       description: "Customize your experience",
+      isClickable: true,
     },
     {
       id: "profile",
@@ -65,6 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: User,
       description: "Your academic journey",
       badge: "94%",
+      isClickable: true,
     },
   ];
 
@@ -75,18 +81,21 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: BookOpen,
       description: "Plan your semester",
       isNew: true,
+      isClickable: false, // Keep as is for now
     },
     {
       id: "analytics",
       label: "Analytics",
       icon: TrendingUp,
       description: "Track your progress",
+      isClickable: false,
     },
     {
       id: "schedule",
       label: "Schedule",
       icon: Calendar,
       description: "Manage your time",
+      isClickable: false,
     },
     {
       id: "achievements",
@@ -94,6 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       icon: Award,
       description: "Your milestones",
       badge: "12",
+      isClickable: false,
     },
   ];
 
@@ -103,21 +113,36 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: "Help & Support",
       icon: HelpCircle,
       description: "Get assistance",
+      isClickable: false,
     },
   ];
 
-  const handleMenuItemClick = (pageId: string) => {
-    if (["chat", "preferences", "profile"].includes(pageId)) {
-      setActivePage(pageId as ActivePage);
+  // FIXED: Proper menu item click handler
+  const handleMenuItemClick = (item: MenuItem) => {
+    console.log(`Clicked on ${item.id}`, { isClickable: item.isClickable });
+
+    // Only handle navigation for clickable items
+    if (
+      item.isClickable &&
+      ["chat", "preferences", "profile"].includes(item.id)
+    ) {
+      setActivePage(item.id as ActivePage);
+      console.log(`Navigating to ${item.id}`);
+    } else {
+      console.log(`${item.id} is not yet implemented`);
+      // Optional: Show a toast or notification that feature is coming soon
     }
+
+    // Always close mobile menu after click
     setIsMobileMenuOpen(false);
   };
 
   const handleLogout = () => {
     logout();
+    setIsMobileMenuOpen(false);
   };
 
-  // Close mobile menu on resize
+  // Handle mobile menu close on resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -142,6 +167,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
   }, [isMobileMenuOpen]);
 
+  // FIXED: Enhanced MenuItem component with proper button behavior
   const MenuItem = ({
     item,
     isActive = false,
@@ -150,9 +176,10 @@ const Sidebar: React.FC<SidebarProps> = ({
     isActive?: boolean;
   }) => (
     <button
-      onClick={() => handleMenuItemClick(item.id)}
+      onClick={() => handleMenuItemClick(item)}
+      disabled={!item.isClickable} // Properly disable non-clickable items
       className={`
-        group relative w-full flex items-center transition-all duration-300 ease-in-out
+        mobile-touch-target sidebar-button group relative w-full flex items-center transition-all duration-300 ease-in-out
         ${
           isCollapsed
             ? "justify-center px-3 py-4"
@@ -161,183 +188,126 @@ const Sidebar: React.FC<SidebarProps> = ({
         rounded-xl font-medium text-sm
         ${
           isActive
-            ? "bg-white/15 text-white shadow-lg backdrop-blur-sm border border-white/20"
-            : "text-white/80 hover:text-white hover:bg-white/10"
+            ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-lg scale-105"
+            : item.isClickable
+            ? "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:scale-102 cursor-pointer"
+            : "text-sidebar-foreground/60 cursor-default opacity-70"
         }
-        hover:scale-[1.02] active:scale-[0.98] transform
-        focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent
+        ${!item.isClickable ? "hover:bg-sidebar-accent/30" : ""}
+        focus:outline-none focus:ring-2 focus:ring-sidebar-primary focus:ring-offset-2
       `}
     >
-      {/* Icon */}
-      <div
-        className={`
-        flex-shrink-0 relative
-        ${isActive ? "text-white" : "text-white/70 group-hover:text-white"}
-        transition-colors duration-200
-      `}
-      >
-        <item.icon className="h-5 w-5" />
+      <div className="flex items-center justify-center flex-shrink-0">
+        <item.icon className={`h-5 w-5 ${isActive ? "text-white" : ""}`} />
         {item.isNew && (
-          <div className="absolute -top-1 -right-1">
-            <Sparkles className="h-3 w-3 text-yellow-400 animate-pulse" />
-          </div>
+          <div className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full animate-pulse" />
         )}
       </div>
 
-      {/* Label and Description - Hidden when collapsed */}
       {!isCollapsed && (
-        <div className="flex-1 min-w-0 text-right">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+        <>
+          <div className="flex-1 text-right">
+            <div className="flex items-center justify-between">
+              <span className="truncate">{item.label}</span>
               {item.badge && (
-                <span
-                  className={`
-                  px-2 py-0.5 rounded-full text-xs font-semibold
-                  ${
-                    isActive
-                      ? "bg-white text-hit-primary"
-                      : "bg-white/20 text-white/90"
-                  }
-                  transition-colors duration-200
-                `}
-                >
+                <span className="px-2 py-1 text-xs bg-sidebar-accent text-sidebar-accent-foreground rounded-full">
                   {item.badge}
                 </span>
               )}
-              {isActive && <ChevronRight className="h-3 w-3 text-white/80" />}
             </div>
-            <div>
-              <div className="font-medium text-right">{item.label}</div>
-              <div
-                className={`
-                text-xs text-right truncate mt-0.5
-                ${isActive ? "text-white/80" : "text-white/60"}
-              `}
-              >
-                {item.description}
-              </div>
-            </div>
+            <p className="text-xs text-sidebar-foreground/70 truncate mt-1">
+              {item.description}
+            </p>
           </div>
-        </div>
-      )}
 
-      {/* Tooltip for collapsed state */}
-      {isCollapsed && (
-        <div
-          className="
-          absolute right-full mr-3 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg
-          opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none
-          whitespace-nowrap z-50 border border-gray-700
-        "
-        >
-          <div className="font-medium">{item.label}</div>
-          <div className="text-xs text-gray-300">{item.description}</div>
-          <div className="absolute top-1/2 -translate-y-1/2 right-[-4px] w-2 h-2 bg-gray-900 border-r border-b border-gray-700 rotate-45"></div>
-        </div>
-      )}
-
-      {/* Active indicator */}
-      {isActive && (
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-full"></div>
+          <ChevronRight
+            className={`h-4 w-4 transition-transform duration-200 ${
+              isActive ? "rotate-90" : "group-hover:translate-x-1"
+            }`}
+          />
+        </>
       )}
     </button>
   );
 
+  // Section divider component
   const SectionDivider = ({ title }: { title: string }) => (
-    <div className="flex items-center py-4">
-      {!isCollapsed ? (
+    <div className="flex items-center my-4">
+      <div className="flex-1 h-px bg-sidebar-border"></div>
+      {!isCollapsed && (
         <>
-          <div className="flex-1 h-px bg-white/20"></div>
-          <span className="px-3 text-xs font-medium text-white/60 uppercase tracking-wider">
+          <span className="px-3 text-xs text-sidebar-foreground/50 font-medium">
             {title}
           </span>
-          <div className="flex-1 h-px bg-white/20"></div>
+          <div className="flex-1 h-px bg-sidebar-border"></div>
         </>
-      ) : (
-        <div className="w-full h-px bg-white/20"></div>
       )}
     </div>
   );
 
   return (
     <>
-      {/* Mobile Menu Toggle */}
+      {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-hit-primary text-white rounded-lg shadow-lg hover:bg-hit-primary/90 transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 bg-sidebar-background text-sidebar-foreground rounded-xl shadow-lg mobile-touch-target"
       >
-        <Menu className="h-5 w-5" />
+        <Menu className="h-6 w-6" />
       </button>
 
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300"
+          className="lg:hidden fixed inset-0 bg-black/50 z-40 sidebar-mobile"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar Container */}
       <div
         className={`
-        fixed lg:static inset-y-0 left-0 z-50
-        ${isCollapsed ? "w-20" : "w-80"} 
-        ${
-          isMobileMenuOpen
-            ? "translate-x-0"
-            : "-translate-x-full lg:translate-x-0"
-        }
-        transition-all duration-300 ease-in-out
-        bg-gradient-to-br from-hit-secondary via-hit-dark to-hit-secondary/90 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800
-        border-r border-white/10 dark:border-gray-700/50 shadow-2xl
-        flex flex-col
-      `}
+          bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border
+          flex flex-col h-full relative z-30 transition-all duration-300 ease-in-out
+          ${isCollapsed ? "w-16" : "w-64"}
+          lg:translate-x-0
+          ${
+            isMobileMenuOpen
+              ? "fixed top-0 left-0 translate-x-0 w-80 sidebar-content-mobile open"
+              : "fixed top-0 left-0 translate-x-full lg:translate-x-0 sidebar-content-mobile"
+          }
+        `}
       >
         {/* Header */}
-        <div className="relative">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5"></div>
-
-          <div
-            className={`relative p-6 border-b border-white/10 dark:border-gray-700/50 ${
-              isCollapsed ? "px-3" : ""
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <div
-                className={`flex items-center transition-all duration-300 ${
-                  isCollapsed ? "justify-center" : "space-x-3"
-                }`}
-              >
-                <div className="relative">
-                  <div className="h-12 w-12 bg-white/20 dark:bg-gray-700/50 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20 dark:border-gray-600/50 shadow-lg">
-                    <img
-                      src="/logo-white-bg.png"
-                      className="h-8 w-8 rounded-lg"
-                      alt="MentorHIT"
-                    />
+        <div className="p-4 border-b border-sidebar-border bg-sidebar-background/50 backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <div
+              className={`flex items-center ${
+                isCollapsed ? "justify-center" : "space-x-3"
+              }`}
+            >
+              {!isCollapsed && (
+                <div className="flex items-center space-x-3">
+                  <div className="h-8 w-8 bg-gradient-to-br from-sidebar-primary to-blue-600 rounded-lg flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-white" />
                   </div>
-                  <div className="absolute -top-1 -right-1 h-4 w-4 bg-green-400 rounded-full border-2 border-hit-dark dark:border-gray-800 animate-pulse"></div>
-                </div>
-
-                {!isCollapsed && (
                   <div>
-                    <h2 className="text-xl font-bold text-white">MentorHIT</h2>
-                    <p className="text-sm text-white/70 flex items-center space-x-1">
-                      <Sparkles className="h-3 w-3" />
-                      <span>AI Academic Advisor</span>
+                    <h2 className="font-bold text-lg text-sidebar-foreground">
+                      MentorHIT
+                    </h2>
+                    <p className="text-xs text-sidebar-foreground/70">
+                      Academic AI Assistant
                     </p>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
-              {/* Desktop collapse toggle */}
+              {/* Desktop collapse button */}
               <button
                 onClick={onToggleCollapse}
-                className="hidden lg:flex p-1.5 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+                className="hidden lg:flex p-1.5 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent rounded-lg transition-colors mobile-touch-target"
               >
                 <ChevronRight
-                  className={`h-4 w-4 transition-transform duration-200 ${
+                  className={`h-5 w-5 transition-transform duration-200 ${
                     isCollapsed ? "" : "rotate-180"
                   }`}
                 />
@@ -346,7 +316,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               {/* Mobile close button */}
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="lg:hidden p-1.5 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="lg:hidden p-1.5 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent rounded-lg transition-colors mobile-touch-target"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -355,7 +325,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
           <nav className={`p-4 space-y-2 ${isCollapsed ? "px-3" : ""}`}>
             {/* Main Navigation */}
             <div>
@@ -388,66 +358,62 @@ const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        {/* User Profile Section */}
+        {/* FIXED: Enhanced User Profile Section */}
         <div
-          className={`border-t border-white/10 dark:border-gray-700/50 p-4 bg-white/5 dark:bg-gray-800/30 backdrop-blur-sm ${
+          className={`border-t border-sidebar-border p-4 bg-sidebar-background/50 backdrop-blur-sm ${
             isCollapsed ? "px-3" : ""
           }`}
         >
           {!isCollapsed ? (
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="relative">
-                <div className="h-10 w-10 bg-white/20 rounded-full flex items-center justify-center border border-white/20 overflow-hidden">
-                  {user?.name.includes("noy") ? (
-                    <img
-                      src="noy.png"
-                      alt="User"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <User className="h-5 w-5 text-white" />
-                  )}
+            <div className="space-y-4">
+              {/* User Info */}
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div className="h-10 w-10 bg-gradient-to-br from-sidebar-primary to-blue-600 rounded-full flex items-center justify-center border-2 border-sidebar-border overflow-hidden">
+                    {user?.name.includes("noy") ? (
+                      <img
+                        src="/api/placeholder/40/40"
+                        alt={user.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <User className="h-5 w-5 text-white" />
+                    )}
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 border-2 border-sidebar-background rounded-full"></div>
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-400 rounded-full border border-hit-dark dark:border-gray-800"></div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-sidebar-foreground truncate">
+                    {user?.name || "Student"}
+                  </p>
+                  <p className="text-xs text-sidebar-foreground/70 truncate">
+                    {user?.email || "student@hit.ac.il"}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0 text-right">
-                <div className="text-sm font-medium text-white truncate">
-                  {user?.name}
-                </div>
-                <div className="text-xs text-white/60 truncate">
-                  ID: {user?.studentId}
-                </div>
-              </div>
+
+              {/* Logout Button */}
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-sidebar-foreground/70 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 mobile-touch-target"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </button>
             </div>
           ) : (
-            <div className="flex justify-center mb-4">
-              <div className="relative">
-                <div className="h-10 w-10 bg-white/20 rounded-full flex items-center justify-center border border-white/20 overflow-hidden">
-                  <User className="h-5 w-5 text-white" />
-                </div>
-                <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-400 rounded-full border border-hit-dark dark:border-gray-800"></div>
+            <div className="flex flex-col items-center space-y-3">
+              <div className="h-8 w-8 bg-gradient-to-br from-sidebar-primary to-blue-600 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-white" />
               </div>
+              <button
+                onClick={handleLogout}
+                className="p-2 text-sidebar-foreground/70 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors mobile-touch-target"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
             </div>
           )}
-
-          {/* Logout Button */}
-          <button
-            onClick={handleLogout}
-            className={`
-              w-full flex items-center transition-all duration-200
-              ${
-                isCollapsed
-                  ? "justify-center px-3 py-3"
-                  : "px-4 py-3 space-x-3 space-x-reverse"
-              }
-              rounded-xl text-sm font-medium
-              text-white/80 hover:text-white hover:bg-red-500/20 border border-transparent hover:border-red-500/30
-              focus:outline-none focus:ring-2 focus:ring-red-400/30
-            `}
-          >
-            <LogOut className="h-4 w-4" />
-            {!isCollapsed && <span>Sign Out</span>}
-          </button>
         </div>
       </div>
     </>

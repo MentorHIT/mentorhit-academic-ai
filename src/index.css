@@ -250,3 +250,493 @@
     font-size: 16px;
   }
 }
+
+/* Add these styles to your src/index.css file */
+
+/* ===== CORE MOBILE OPTIMIZATIONS ===== */
+
+/* Fix horizontal overflow issues - this prevents weird scrolling */
+html,
+body {
+  overflow-x: hidden; /* Prevents horizontal scroll */
+  width: 100%;
+  max-width: 100vw; /* Viewport width units ensure no overflow */
+}
+
+/* Ensure all containers respect viewport boundaries */
+* {
+  box-sizing: border-box; /* Includes padding/border in width calculations */
+}
+
+/* ===== CHAT INPUT FIXES ===== */
+
+/* Fix the chat textarea visibility issue */
+.chat-input-container {
+  /* Use CSS Grid for better control over textarea positioning */
+  display: grid;
+  grid-template-columns: 1fr auto; /* Flexible textarea + fixed button area */
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Enhanced textarea styling for mobile */
+.chat-textarea {
+  width: 100%;
+  min-height: 44px; /* Minimum touch target size */
+  max-height: 120px; /* Prevent excessive growth */
+  padding: 12px 16px;
+  border: 2px solid #007377;
+  border-radius: 24px;
+  resize: none;
+  font-size: 16px; /* Prevents iOS zoom on focus */
+  line-height: 1.5;
+  background: white;
+
+  /* Fix RTL text direction for Hebrew */
+  direction: rtl;
+  text-align: right;
+
+  /* Smooth transitions */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-textarea:focus {
+  outline: none;
+  border-color: #0097a7;
+  box-shadow: 0 0 0 3px rgba(0, 151, 167, 0.1);
+}
+
+/* Button area styling */
+.chat-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; /* Prevents buttons from shrinking */
+}
+
+/* ===== SIDEBAR MOBILE OPTIMIZATIONS ===== */
+
+/* Enhanced mobile sidebar */
+@media screen and (max-width: 1024px) {
+  .sidebar-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    backdrop-filter: blur(4px);
+  }
+
+  .sidebar-content-mobile {
+    width: 280px; /* Fixed width for mobile sidebar */
+    height: 100vh;
+    background: #032f32;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-content-mobile.open {
+    transform: translateX(0);
+  }
+}
+
+/* ===== DASHBOARD SPACING IMPROVEMENTS ===== */
+
+/* Reduce cramped feeling with better spacing */
+.dashboard-main {
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive grid for dashboard content */
+.dashboard-content {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .dashboard-main {
+    padding: 24px;
+  }
+
+  .dashboard-content {
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ===== TOUCH TARGET IMPROVEMENTS ===== */
+
+/* Ensure all interactive elements meet mobile accessibility standards */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  /* Improve touch responsiveness */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Enhanced button styling for mobile */
+.sidebar-button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: white;
+  text-align: left;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  /* Ensure proper touch targets */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-button:hover,
+.sidebar-button:focus {
+  background: rgba(0, 151, 167, 0.2);
+  outline: none;
+}
+
+.sidebar-button:active {
+  background: rgba(0, 151, 167, 0.3);
+  transform: scale(0.98);
+}
+
+/* ===== SCROLL BEHAVIOR FIXES ===== */
+
+/* Smooth scrolling for better UX */
+.chat-messages-container {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+
+  /* Custom scrollbar for better mobile experience */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 151, 167, 0.3) transparent;
+}
+
+/* Webkit scrollbar styling */
+.chat-messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 151, 167, 0.3);
+  border-radius: 3px;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+
+/* Fluid typography that scales with viewport */
+.responsive-text-base {
+  font-size: clamp(14px, 2.5vw, 16px);
+  line-height: 1.5;
+}
+
+.responsive-text-lg {
+  font-size: clamp(16px, 3vw, 18px);
+  line-height: 1.4;
+}
+
+.responsive-text-xl {
+  font-size: clamp(18px, 4vw, 24px);
+  line-height: 1.3;
+}
+
+/* ===== SAFE AREA HANDLING FOR MOBILE ===== */
+
+/* Handle mobile safe areas (notches, etc.) */
+.mobile-safe-area {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* Add these styles to your src/index.css file */
+
+/* ===== CORE MOBILE OPTIMIZATIONS ===== */
+
+/* Fix horizontal overflow issues - this prevents weird scrolling */
+html,
+body {
+  overflow-x: hidden; /* Prevents horizontal scroll */
+  width: 100%;
+  max-width: 100vw; /* Viewport width units ensure no overflow */
+}
+
+/* Ensure all containers respect viewport boundaries */
+* {
+  box-sizing: border-box; /* Includes padding/border in width calculations */
+}
+
+/* ===== CHAT INPUT FIXES ===== */
+
+/* Fix the chat textarea visibility issue */
+.chat-input-container {
+  /* Use CSS Grid for better control over textarea positioning */
+  display: grid;
+  grid-template-columns: 1fr auto; /* Flexible textarea + fixed button area */
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Enhanced textarea styling for mobile */
+.chat-textarea {
+  width: 100%;
+  min-height: 44px; /* Minimum touch target size */
+  max-height: 120px; /* Prevent excessive growth */
+  padding: 12px 16px;
+  border: 2px solid #007377;
+  border-radius: 24px;
+  resize: none;
+  font-size: 16px; /* Prevents iOS zoom on focus */
+  line-height: 1.5;
+  background: white;
+
+  /* Fix RTL text direction for Hebrew */
+  direction: rtl;
+  text-align: right;
+
+  /* Smooth transitions */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-textarea:focus {
+  outline: none;
+  border-color: #0097a7;
+  box-shadow: 0 0 0 3px rgba(0, 151, 167, 0.1);
+}
+
+/* Button area styling */
+.chat-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0; /* Prevents buttons from shrinking */
+}
+
+/* ===== SIDEBAR MOBILE OPTIMIZATIONS ===== */
+
+/* Enhanced mobile sidebar */
+@media screen and (max-width: 1024px) {
+  .sidebar-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    backdrop-filter: blur(4px);
+  }
+
+  .sidebar-content-mobile {
+    width: 280px; /* Fixed width for mobile sidebar */
+    height: 100vh;
+    background: #032f32;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-content-mobile.open {
+    transform: translateX(0);
+  }
+}
+
+/* ===== DASHBOARD SPACING IMPROVEMENTS ===== */
+
+/* Reduce cramped feeling with better spacing */
+.dashboard-main {
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive grid for dashboard content */
+.dashboard-content {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .dashboard-main {
+    padding: 24px;
+  }
+
+  .dashboard-content {
+    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ===== TOUCH TARGET IMPROVEMENTS ===== */
+
+/* Ensure all interactive elements meet mobile accessibility standards */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  /* Improve touch responsiveness */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Enhanced button styling for mobile */
+.sidebar-button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: white;
+  text-align: left;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  /* Ensure proper touch targets */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-button:hover,
+.sidebar-button:focus {
+  background: rgba(0, 151, 167, 0.2);
+  outline: none;
+}
+
+.sidebar-button:active {
+  background: rgba(0, 151, 167, 0.3);
+  transform: scale(0.98);
+}
+
+/* ===== SCROLL BEHAVIOR FIXES ===== */
+
+/* Fix weird scrolling - ensure only one scroll context */
+.main-chat-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  /* Custom scrollbar for better mobile experience */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 151, 167, 0.3) transparent;
+}
+
+/* Webkit scrollbar styling */
+.chat-messages-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 151, 167, 0.3);
+  border-radius: 3px;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+
+/* Fluid typography that scales with viewport */
+.responsive-text-base {
+  font-size: clamp(14px, 2.5vw, 16px);
+  line-height: 1.5;
+}
+
+.responsive-text-lg {
+  font-size: clamp(16px, 3vw, 18px);
+  line-height: 1.4;
+}
+
+.responsive-text-xl {
+  font-size: clamp(18px, 4vw, 24px);
+  line-height: 1.3;
+}
+
+/* ===== SAFE AREA HANDLING FOR MOBILE ===== */
+
+/* Handle mobile safe areas (notches, etc.) */
+.mobile-safe-area {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

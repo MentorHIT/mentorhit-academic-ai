@@ -1,4 +1,4 @@
-// src/components/Dashboard.tsx - Replace the entire Dashboard component
+// src/components/Dashboard.tsx - FIXED MOBILE NAVIGATION
 
 import React, { useState } from "react";
 import {
@@ -61,6 +61,8 @@ const Dashboard = () => {
   ];
 
   const renderPage = () => {
+    console.log("Rendering page:", activePage); // Debug log - remove later
+
     switch (activePage) {
       case "chat":
         return <ChatInterface />;
@@ -102,11 +104,31 @@ const Dashboard = () => {
     }
   };
 
-  const handleMenuItemClick = (pageId: string) => {
+  // ✅ FIXED NAVIGATION FUNCTION with event handling
+  const handleMenuItemClick = (e: React.MouseEvent, pageId: string) => {
+    e.preventDefault();
+    e.stopPropagation(); // ✅ PREVENT EVENT BUBBLING TO BACKDROP
+
+    console.log("Navigating to:", pageId); // Debug log
+
     if (["chat", "preferences", "profile"].includes(pageId)) {
       setActivePage(pageId as ActivePage);
+      console.log("Active page set to:", pageId); // Debug log
     }
-    setIsMobileMenuOpen(false);
+
+    // Add small delay to ensure state update before closing menu
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+      console.log("Mobile menu closed"); // Debug log
+    }, 100);
+  };
+
+  // ✅ SEPARATE BACKDROP CLICK HANDLER
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    // Only close if clicking the backdrop itself, not its children
+    if (e.target === e.currentTarget) {
+      setIsMobileMenuOpen(false);
+    }
   };
 
   const pageInfo = getPageInfo();
@@ -116,7 +138,7 @@ const Dashboard = () => {
       {/* Enhanced Top Navigation Header - H.I.T COLORS */}
       <header className="relative bg-gradient-to-r from-hit-light/90 to-white/80 backdrop-blur-xl border-b border-hit-primary/30 shadow-lg z-30">
         {/* Gradient accent bar */}
-        <div className={`h-1 bg-gradient-to-r ${pageInfo.gradient}`}></div>
+        <div className={`h-1 bg-gradient-to-r ${pageInfo.gradient}`} />
 
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
@@ -137,44 +159,38 @@ const Dashboard = () => {
                   <div className="h-12 w-12 bg-gradient-to-br from-hit-primary to-hit-secondary rounded-2xl flex items-center justify-center shadow-lg relative overflow-hidden">
                     <img
                       src="/logo-white-bg.png"
-                      className="h-8 w-8 rounded-lg z-10"
+                      className="h-7 w-7 rounded-xl z-10"
                       alt="MentorHIT"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+                    {/* Animated glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
                   </div>
                 </div>
-
-                {/* Simplified centered title */}
-                <div className="text-center flex-1 max-w-md mx-8">
-                  <h1 className="text-2xl lg:text-3xl font-bold text-hit-dark mb-0">
-                    MentorHIT
+                <div className="hidden sm:block">
+                  <h1 className="text-xl md:text-2xl font-bold text-hit-dark tracking-tight">
+                    {pageInfo.title}
                   </h1>
+                  <p className="text-sm text-hit-secondary">
+                    {pageInfo.subtitle}
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Right: Enhanced Navigation + User */}
-            <div className="flex items-center space-x-2">
-              {/* Search Button */}
-              <button className="hidden md:flex p-3 text-hit-secondary hover:text-hit-primary rounded-xl hover:bg-hit-light/40 transition-all duration-200 touch-manipulation">
-                <Search className="h-5 w-5" />
-              </button>
-
-              {/* Notifications - Use the new component */}
-              <NotificationDropdown />
-
-              {/* Desktop Navigation */}
-              <nav className="hidden md:flex items-center space-x-1 ml-4">
+            {/* Right: Desktop Navigation + User */}
+            <div className="flex items-center space-x-6">
+              {/* Enhanced Desktop Navigation */}
+              <nav className="hidden md:flex items-center space-x-3">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
-                    onClick={() => handleMenuItemClick(item.id)}
+                    onClick={(e) => handleMenuItemClick(e, item.id)}
                     className={`
-                      flex items-center space-x-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 touch-manipulation relative overflow-hidden group
+                      relative flex items-center space-x-3 px-5 py-3 rounded-xl font-medium text-sm transition-all duration-200 group touch-manipulation overflow-hidden
                       ${
                         activePage === item.id
-                          ? `bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg`
-                          : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/40"
+                          ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg scale-105"
+                          : "text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50 hover:scale-105"
                       }
                     `}
                     style={{ minHeight: "48px" }}
@@ -196,7 +212,7 @@ const Dashboard = () => {
                       </span>
                     )}
                     {activePage === item.id && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-xl"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-xl pointer-events-none" />
                     )}
                   </button>
                 ))}
@@ -216,7 +232,7 @@ const Dashboard = () => {
                       <User className="h-5 w-5 text-white" />
                     )}
                     {/* Online indicator */}
-                    <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-400 rounded-full border-2 border-white"></div>
+                    <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-400 rounded-full border-2 border-white" />
                   </div>
                   <div className="text-right hidden sm:block">
                     <p className="text-sm font-semibold text-hit-dark truncate max-w-24">
@@ -234,17 +250,20 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Enhanced Mobile Navigation Overlay */}
+      {/* ✅ FIXED Mobile Navigation Overlay */}
       {isMobileMenuOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop with improved click handling */}
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={handleBackdropClick}
           />
 
-          {/* Mobile Menu */}
-          <div className="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-hit-light/90 to-hit-light/70 backdrop-blur-xl shadow-2xl z-50 lg:hidden border-r border-hit-primary/20">
+          {/* Mobile Menu with event isolation */}
+          <div
+            className="fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-hit-light/90 to-hit-light/70 backdrop-blur-xl shadow-2xl z-50 lg:hidden border-r border-hit-primary/20"
+            onClick={(e) => e.stopPropagation()} // ✅ PREVENT CLICKS FROM BUBBLING TO BACKDROP
+          >
             <nav className="h-full flex flex-col p-6">
               {/* Close button */}
               <button
@@ -271,14 +290,14 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Main menu items */}
+              {/* ✅ FIXED Main menu items with proper event handling */}
               <div className="space-y-2 mb-6">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
-                    onClick={() => handleMenuItemClick(item.id)}
+                    onClick={(e) => handleMenuItemClick(e, item.id)} // ✅ PASS EVENT TO PREVENT BUBBLING
                     className={`
-                      w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-left transition-all duration-200 touch-manipulation
+                      relative w-full flex items-center space-x-4 px-5 py-4 rounded-2xl text-left transition-all duration-200 touch-manipulation overflow-hidden
                       ${
                         activePage === item.id
                           ? "bg-gradient-to-r from-hit-primary to-hit-secondary text-white shadow-lg"
@@ -287,12 +306,14 @@ const Dashboard = () => {
                     `}
                     style={{ minHeight: "56px" }}
                   >
-                    <item.icon className="h-6 w-6" />
-                    <span className="text-lg flex-1">{item.label}</span>
+                    <item.icon className="h-6 w-6 relative z-10" />
+                    <span className="text-lg flex-1 relative z-10">
+                      {item.label}
+                    </span>
                     {item.badge && (
                       <span
                         className={`
-                        px-2 py-1 rounded-full text-sm font-semibold
+                        px-2 py-1 rounded-full text-sm font-semibold relative z-10
                         ${
                           activePage === item.id
                             ? "bg-white/20 text-white"
@@ -303,8 +324,9 @@ const Dashboard = () => {
                         {item.badge}
                       </span>
                     )}
+                    {/* ✅ FIXED: Added pointer-events-none to prevent click blocking */}
                     {activePage === item.id && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-2xl"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-2xl pointer-events-none" />
                     )}
                   </button>
                 ))}
@@ -318,7 +340,7 @@ const Dashboard = () => {
                   {secondaryItems.map((item) => (
                     <button
                       key={item.id}
-                      onClick={() => handleMenuItemClick(item.id)}
+                      onClick={(e) => handleMenuItemClick(e, item.id)}
                       className="w-full flex items-center space-x-4 px-5 py-3 rounded-xl text-left text-hit-secondary hover:text-hit-primary hover:bg-hit-light/50 transition-all duration-200 touch-manipulation"
                       style={{ minHeight: "52px" }}
                     >
